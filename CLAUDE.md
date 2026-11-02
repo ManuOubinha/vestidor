@@ -12,7 +12,7 @@ DressKS, vestidor virtual personal (PWA) para Android e iPhone. Hablar con el us
 
 ## Diseño (decisión del usuario)
 
-Estética tipo **holded.com**, igual que Cuentas Claras: tinta azul marino `#121926`, Inter, botones en píldora, tarjetas redondeadas con sombra suave, teselas de icono pastel, tarjeta azul marino (aquí, la del tiempo), fondo de puntos con brillos rosa y lavanda, punto rojo coral tras los títulos. Conceptos, no su marca ni sus textos.
+Estética tipo **holded.com** (conceptos), pero con la paleta de DressKS elegida por el usuario: **morado oscuro** (tinta `#2b1338`, tarjeta `#2e1242`→`#4b1f66`) y **blanco roto vainilla** (fondo `#faf6ec`, superficies `#fffdf7`; en oscuro el texto es vainilla `#f6efe0` sobre `#150a1d`). Además: Inter, botones en píldora, tarjetas redondeadas con sombra suave, teselas de icono pastel, tarjeta morada (la del tiempo), fondo de puntos con brillos rosa y lavanda, punto rojo coral tras los títulos. Conceptos, no su marca ni sus textos.
 - Botón día/noche arriba; colores en tokens de `:root` redefinidos para oscuro.
 - Eliminar en rojo con la pregunta «¿Estás seguro de que deseas eliminar?» (`askDelete`, nunca `confirm()`).
 - Animaciones solo al cambiar de pantalla, apagadas con `prefers-reduced-motion`.

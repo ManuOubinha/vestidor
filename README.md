@@ -24,7 +24,7 @@ node tools/serve.mjs      # http://localhost:8080
 | `index.html` | Toda la app: CSS, HTML y JS en un archivo. |
 | `sw.js` | Service worker (sin conexión). **Sube `VERSION`** al publicar cambios. |
 | `manifest.webmanifest` | Datos para instalarla. |
-| `img/` | Iconos de la app, generados desde `tools/icon.html`. |
+| `img/` | Iconos de la app: `icon-512` y `icon-maskable-512` se fotografían de `tools/icon.html` con Chrome sin ventana; los de 192 y 180 se reducen desde el de 512 (Chrome no hace capturas tan pequeñas). |
 | `icons/` | Iconos Tabler (MIT). `node tools/build-icons.mjs` los incrusta en `index.html`. |
 
 Iconos: [Tabler Icons](https://tabler.io/icons), licencia MIT.
