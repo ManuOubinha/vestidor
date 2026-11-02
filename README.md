@@ -8,8 +8,11 @@ Es una **PWA**: se abre en el navegador y se instala en la pantalla de inicio. *
 
 - **Hoy**: tiempo del día (Open-Meteo, sin claves) y una sugerencia que tiene en cuenta la ocasión, la temporada, el frío o el calor, la lluvia, los favoritos y lo que llevas más tiempo sin ponerte. Botones «Otra» y «Me lo pongo».
 - **Vestidor**: carpetas «Todos los conjuntos», Primavera, Verano, Otoño e Invierno; dentro, cuadrícula con búsqueda por nombre o prenda, filtros por etiqueta y orden (olvidados, recientes, más puestos).
-- **Historial**: qué llevaste cada día, conjuntos olvidados y sin estrenar.
-- **Ajustes**: instalar, copia de seguridad en `.zip` (fotos + `vestidor.json`) y restaurar, ubicación del tiempo y espacio usado.
+- **Calendario**, con tres apartados:
+  - **Planificar**: calendario del mes; en cada día dejas un conjunto preparado (eliges tú o «Que elija DressKS») o apuntas lo que llevaste un día pasado. El tiempo previsto (16 días) ayuda a elegir. Lo planificado para hoy sale en «Hoy».
+  - **Viajes**: destino, fechas y para qué. Mira el tiempo de allí, rellena un conjunto por día y hace la lista de la maleta (prendas sin repetir, con casillas) que se puede compartir.
+  - **Historial**: qué llevaste cada día, conjuntos olvidados y sin estrenar.
+- **Ajustes**: instalar, personalizar colores (botones, tarjeta del tiempo, detalles), copia de seguridad en `.zip` (fotos + `vestidor.json`, con planes y viajes) y restaurar, ubicación del tiempo y espacio usado.
 
 ## Probar en local
 

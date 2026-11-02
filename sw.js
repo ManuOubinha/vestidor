@@ -1,6 +1,6 @@
 // Service worker: deja la app disponible sin conexión.
 // Al cambiar index.html u otro archivo de SHELL, sube VERSION para que los móviles se actualicen.
-const VERSION = "vestidor-v3";
+const VERSION = "vestidor-v4";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./img/icon-192.png", "./img/icon-512.png", "./img/apple-touch-icon.png"];
 const FONTS = "vestidor-fuentes";
 

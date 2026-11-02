@@ -54,6 +54,8 @@
   .app { max-width:720px; margin:0 auto; }
   h1 { font-size:30px; line-height:1.1; margin:0; font-weight:600; letter-spacing:-.04em; }
   h1::after { content:"."; color:var(--brand); }
+  h1.q { font-size:26px; }
+  h1.q::after { content:"?"; }
   h2 { font-size:17px; margin:0 0 12px; font-weight:600; letter-spacing:-.02em; display:flex; align-items:center; gap:8px; }
   h2 .more { margin-left:auto; font-size:13px; font-weight:500; color:var(--mut); }
   p { margin:0; }
@@ -293,6 +295,82 @@
   .det .meta b { display:block; font-size:17px; font-weight:600; letter-spacing:-.02em; }
   .det .meta span { font-size:12px; color:var(--mut); }
   .det h3 { font-size:13px; font-weight:600; color:var(--mut); margin:16px 0 8px; }
+
+  /* Personalizar colores */
+  .zone + .zone { margin-top:14px; }
+  .zone > b { display:block; font-size:14px; font-weight:600; }
+  .zone > small { display:block; color:var(--mut); margin-bottom:8px; }
+  .swatches { display:flex; flex-wrap:wrap; gap:10px; }
+  .sw { width:40px; height:40px; border-radius:50%; padding:0; cursor:pointer; border:3px solid var(--surface); box-shadow:0 0 0 1px var(--line); display:grid; place-items:center; color:#fff; transition:box-shadow .2s var(--ease); }
+  .sw .ico { width:18px; height:18px; opacity:0; }
+  .sw[aria-pressed="true"] { box-shadow:0 0 0 2px var(--ink); }
+  .sw[aria-pressed="true"] .ico { opacity:1; }
+
+  /* Calendario: apartados, mes, días y viajes */
+  .seg { display:grid; grid-template-columns:repeat(3, 1fr); gap:4px; padding:4px; border-radius:9999px; background:var(--accent-soft); margin-bottom:18px; }
+  .seg button { border:0; background:none; border-radius:9999px; min-height:38px; font-weight:500; font-size:14px; color:var(--mut); cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; }
+  .seg button .ico { width:17px; height:17px; }
+  .seg button[aria-pressed="true"] { background:var(--surface); color:var(--ink); box-shadow:var(--shadow); font-weight:600; }
+  .mnav { display:flex; align-items:center; gap:8px; margin:0 auto 10px; max-width:520px; }
+  .mnav b { flex:1; text-align:center; font-size:17px; font-weight:600; letter-spacing:-.02em; }
+  .mnav b::first-letter { text-transform:uppercase; }
+  .cal { padding:10px; max-width:520px; margin-left:auto; margin-right:auto; }
+  .cal .wd, .cal .days { display:grid; grid-template-columns:repeat(7, minmax(0, 1fr)); gap:4px; }
+  .cal .wd span { text-align:center; font-size:11px; font-weight:600; color:var(--mut); text-transform:uppercase; padding-bottom:6px; }
+  .cday { position:relative; aspect-ratio:3/4; border-radius:10px; border:1px solid transparent; background:var(--accent-soft); padding:0; overflow:hidden; cursor:pointer; color:var(--ink); }
+  .cday.out { visibility:hidden; }
+  .cday.past:not(.has) { background:transparent; color:var(--mut); }
+  .cday img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .cday.plan img { opacity:.72; }
+  .cday .n { position:absolute; left:3px; top:3px; z-index:1; min-width:18px; height:18px; padding:0 4px; border-radius:9999px; font-size:11px; font-weight:600; line-height:18px; }
+  .cday.has .n { background:rgba(255,253,247,.92); color:#2b1338; }
+  .cday.today { border-color:var(--brand); box-shadow:0 0 0 1px var(--brand); }
+  .cday.today .n { background:var(--brand); color:#fff; }
+  .cday .tr { position:absolute; left:0; right:0; bottom:0; height:4px; background:var(--violet); z-index:1; }
+  .cday .pin { position:absolute; right:3px; bottom:6px; z-index:1; width:16px; height:16px; border-radius:50%; background:var(--accent); color:var(--accent-ink); display:grid; place-items:center; }
+  .cday .pin .ico { width:11px; height:11px; }
+  .legend { display:flex; flex-wrap:wrap; gap:14px; font-size:12px; color:var(--mut); margin-top:10px; padding:0 4px; }
+  .legend span { display:inline-flex; align-items:center; gap:6px; }
+  .legend i { width:12px; height:12px; border-radius:4px; display:inline-block; }
+  .wxs { display:inline-flex; align-items:center; gap:4px; font-size:13px; color:var(--mut); white-space:nowrap; }
+  .wxs .ico { width:16px; height:16px; }
+  .slot { display:flex; align-items:center; gap:12px; }
+  .slot .ph { width:56px; height:74px; border-radius:12px; object-fit:cover; flex:none; background:var(--accent-soft); border:1.5px dashed var(--line); display:grid; place-items:center; color:var(--mut); }
+  .slot .t { flex:1; min-width:0; }
+  .slot .t b { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-weight:600; }
+  .slot + .slot { margin-top:12px; padding-top:12px; border-top:1px solid var(--line); }
+  .info-line { display:flex; align-items:center; gap:8px; color:var(--mut); font-size:14px; margin-bottom:14px; }
+  .info-line .ico { width:18px; height:18px; }
+  .trip { display:flex; align-items:center; gap:12px; width:100%; text-align:left; cursor:pointer; color:inherit; font:inherit; }
+  .trip + .trip { margin-top:10px; }
+  .trip .tl { width:44px; height:44px; border-radius:14px; display:grid; place-items:center; flex:none; }
+  .trip .t { flex:1; min-width:0; }
+  .trip .t b { display:block; font-weight:600; letter-spacing:-.02em; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .trip .t small { color:var(--mut); }
+  .trip .thumbs { display:flex; margin-top:8px; }
+  .trip .thumbs img { width:30px; height:40px; border-radius:8px; object-fit:cover; border:2px solid var(--surface); margin-right:-8px; }
+  .tday { display:flex; align-items:center; gap:12px; width:100%; padding:8px; border:0; background:none; border-radius:14px; text-align:left; cursor:pointer; }
+  .tday:hover { background:var(--accent-soft); }
+  .tday .d { width:44px; text-align:center; flex:none; }
+  .tday .d b { display:block; font-size:20px; font-weight:600; letter-spacing:-.03em; line-height:1; }
+  .tday .d small { color:var(--mut); font-size:12px; }
+  .tday img, .tday .ph { width:44px; height:58px; border-radius:10px; object-fit:cover; flex:none; background:var(--accent-soft); }
+  .tday .ph { border:1.5px dashed var(--line); display:grid; place-items:center; color:var(--mut); }
+  .tday .t { flex:1; min-width:0; }
+  .tday .t b { display:block; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .checks { display:flex; flex-direction:column; }
+  .check { display:flex; align-items:center; gap:12px; padding:10px 4px; border-bottom:1px solid var(--line); cursor:pointer; }
+  .check:last-child { border-bottom:0; }
+  .check input { width:20px; height:20px; accent-color:var(--brand); margin:0; flex:none; }
+  .check span { flex:1; }
+  .check small { color:var(--mut); }
+  .check input:checked + span { text-decoration:line-through; color:var(--mut); }
+  .dates { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .picked { display:flex; align-items:center; gap:8px; margin-top:10px; padding:10px 14px; border-radius:14px; background:var(--violet-bg); color:var(--violet); font-weight:500; }
+  .picked .ico { width:18px; height:18px; }
+  .pick-sec { font-size:13px; font-weight:600; color:var(--mut); margin:4px 0 10px; }
+  .pick-sec + .grid, .grid + .pick-sec { margin-top:0; }
+  .grid + .pick-sec { margin-top:18px; }
   .det .notes { white-space:pre-wrap; }
 
   .results { display:flex; flex-direction:column; gap:4px; margin-top:12px; }
@@ -389,6 +467,44 @@
   </div>
 </dialog>
 
+<dialog class="sheet" id="d-tripform" aria-labelledby="tf-title">
+  <div class="hd"><b id="tf-title">Nuevo viaje</b><button class="iconbtn" data-act="close" aria-label="Cerrar" data-ic="x"></button></div>
+  <div class="bd">
+    <div class="field"><span class="lb">Destino</span>
+      <form id="tf-form" class="gin"><input class="txt" id="tf-q" placeholder="Ej. Lisboa" autocomplete="off" enterkeyhint="search"><button class="btn">Buscar</button></form>
+      <div class="results" id="tf-res"></div>
+      <div id="tf-place"></div>
+    </div>
+    <div class="field"><span class="lb">Fechas</span>
+      <div class="dates"><label><small class="mut">Ida</small><input class="txt" type="date" id="tf-from"></label><label><small class="mut">Vuelta</small><input class="txt" type="date" id="tf-to"></label></div>
+    </div>
+    <div class="field"><span class="lb">Para qué <i>(sin marcar: cualquiera)</i></span><div class="chips" id="tf-occ"></div></div>
+  </div>
+  <div class="ft">
+    <button class="btn" data-act="close">Cancelar</button>
+    <button class="btn primary" data-act="tf-save">Guardar viaje</button>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="d-trip" aria-labelledby="trip-title">
+  <div class="hd"><b id="trip-title">Viaje</b><button class="iconbtn" data-act="trip-edit" aria-label="Editar viaje" data-ic="pencil"></button><button class="iconbtn" data-act="close" aria-label="Cerrar" data-ic="x"></button></div>
+  <div class="bd" id="trip-body"></div>
+  <div class="ft">
+    <button class="btn danger" data-act="trip-delete" aria-label="Eliminar viaje" data-ic="trash"></button>
+    <button class="btn" data-act="trip-share" data-ic="share">Compartir lista</button>
+  </div>
+</dialog>
+
+<dialog class="sheet" id="d-day" aria-labelledby="day-title">
+  <div class="hd"><b id="day-title">Día</b><button class="iconbtn" data-act="close" aria-label="Cerrar" data-ic="x"></button></div>
+  <div class="bd" id="day-body"></div>
+</dialog>
+
+<dialog class="sheet" id="d-pick" aria-labelledby="pick-title">
+  <div class="hd"><b id="pick-title">Elegir conjunto</b><button class="iconbtn" data-act="close" aria-label="Cerrar" data-ic="x"></button></div>
+  <div class="bd" id="pick-body"></div>
+</dialog>
+
 <dialog class="mini" id="d-ask">
   <b id="ask-title">¿Estás seguro de que deseas eliminar?</b>
   <p id="ask-text">Se borrará la foto y su historial. No se puede deshacer.</p>
@@ -398,7 +514,7 @@
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-const ICONS = {"armchair":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 11a2 2 0 0 1 2 2v2h10v-2a2 2 0 1 1 4 0v4a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2z\" /> <path d=\"M5 11v-5a3 3 0 0 1 3 -3h8a3 3 0 0 1 3 3v5\" /> <path d=\"M6 19v2\" /> <path d=\"M18 19v2\" /></svg>","arrows-shuffle":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 4l3 3l-3 3\" /> <path d=\"M18 20l3 -3l-3 -3\" /> <path d=\"M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5\" /> <path d=\"M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3\" /></svg>","beach":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17.553 16.75a7.5 7.5 0 0 0 -10.606 0\" /> <path d=\"M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z\" /> <path d=\"M16.732 10c1.658 -2.87 2.225 -5.644 1.268 -6.196c-.957 -.552 -3.075 1.326 -4.732 4.196\" /> <path d=\"M15 9l-3 5.196\" /> <path d=\"M3 19.25a2.4 2.4 0 0 1 1 -.25a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 1 .25\" /></svg>","briefcase":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z\" /> <path d=\"M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2\" /> <path d=\"M12 12l0 .01\" /> <path d=\"M3 13a20 20 0 0 0 18 0\" /></svg>","calendar":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z\" /> <path d=\"M16 3v4\" /> <path d=\"M8 3v4\" /> <path d=\"M4 11h16\" /> <path d=\"M11 15h1\" /> <path d=\"M12 15v3\" /></svg>","camera":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2\" /> <path d=\"M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /></svg>","chart-bar":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M4 20h14\" /></svg>","check":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l5 5l10 -10\" /></svg>","chevron-left":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 6l-6 6l6 6\" /></svg>","cloud":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878\" /></svg>","confetti":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5h2\" /> <path d=\"M5 4v2\" /> <path d=\"M11.5 4l-.5 2\" /> <path d=\"M18 5h2\" /> <path d=\"M19 4v2\" /> <path d=\"M15 9l-1 1\" /> <path d=\"M18 13l2 -.5\" /> <path d=\"M18 19h2\" /> <path d=\"M19 18v2\" /> <path d=\"M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z\" /></svg>","download":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2\" /> <path d=\"M7 11l5 5l5 -5\" /> <path d=\"M12 4l0 12\" /></svg>","eye-off":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10.585 10.587a2 2 0 0 0 2.829 2.828\" /> <path d=\"M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87\" /> <path d=\"M3 3l18 18\" /></svg>","folder":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2\" /></svg>","folders":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 3h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2\" /> <path d=\"M17 16v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h2\" /></svg>","hanger":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 6a2 2 0 1 0 -4 0c0 1.667 .67 3 2 4h-.008l7.971 4.428a2 2 0 0 1 1.029 1.749v.823a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-.823a2 2 0 0 1 1.029 -1.749l7.971 -4.428\" /></svg>","heart-filled":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z\" /></svg>","heart":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572\" /></svg>","history":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 8l0 4l2 2\" /> <path d=\"M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5\" /></svg>","home":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l-2 0l9 -9l9 9l-2 0\" /> <path d=\"M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7\" /> <path d=\"M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6\" /></svg>","layout-grid":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /></svg>","leaf":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 21c.5 -4.5 2.5 -8 7 -10\" /> <path d=\"M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z\" /></svg>","map-pin":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /> <path d=\"M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z\" /></svg>","moon":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z\" /></svg>","pencil":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4\" /> <path d=\"M13.5 6.5l4 4\" /></svg>","photo":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 8h.01\" /> <path d=\"M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z\" /> <path d=\"M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5\" /> <path d=\"M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3\" /></svg>","plant":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 15h10v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-4z\" /> <path d=\"M12 9a6 6 0 0 0 -6 -6h-3v2a6 6 0 0 0 6 6h3\" /> <path d=\"M12 11a6 6 0 0 1 6 -6h3v1a6 6 0 0 1 -6 6h-3\" /> <path d=\"M12 15l0 -6\" /></svg>","plus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 5l0 14\" /> <path d=\"M5 12l14 0\" /></svg>","refresh":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4\" /> <path d=\"M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4\" /></svg>","run":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M4 17l5 1l.75 -1.5\" /> <path d=\"M15 21l0 -4l-4 -3l1 -6\" /> <path d=\"M7 12l0 -3l5 -1l3 3l3 1\" /></svg>","search":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0\" /> <path d=\"M21 21l-6 -6\" /></svg>","settings":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z\" /> <path d=\"M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /></svg>","shirt":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0\" /></svg>","snowflake":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 4l2 1l2 -1\" /> <path d=\"M12 2v6.5l3 1.72\" /> <path d=\"M17.928 6.268l.134 2.232l1.866 1.232\" /> <path d=\"M20.66 7l-5.629 3.25l.01 3.458\" /> <path d=\"M19.928 14.268l-1.866 1.232l-.134 2.232\" /> <path d=\"M20.66 17l-5.629 -3.25l-2.99 1.738\" /> <path d=\"M14 20l-2 -1l-2 1\" /> <path d=\"M12 22v-6.5l-3 -1.72\" /> <path d=\"M6.072 17.732l-.134 -2.232l-1.866 -1.232\" /> <path d=\"M3.34 17l5.629 -3.25l-.01 -3.458\" /> <path d=\"M4.072 9.732l1.866 -1.232l.134 -2.232\" /> <path d=\"M3.34 7l5.629 3.25l2.99 -1.738\" /></svg>","sparkles":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z\" /></svg>","sun":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0\" /> <path d=\"M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7\" /></svg>","tag":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M3 6v5.172a2 2 0 0 0 .586 1.414l7.71 7.71a2.41 2.41 0 0 0 3.408 0l5.592 -5.592a2.41 2.41 0 0 0 0 -3.408l-7.71 -7.71a2 2 0 0 0 -1.414 -.586h-5.172a3 3 0 0 0 -3 3z\" /></svg>","temperature-minus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5\" /> <path d=\"M8 9l4 0\" /> <path d=\"M16 9l6 0\" /></svg>","temperature-plus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5\" /> <path d=\"M8 9l4 0\" /> <path d=\"M16 9l6 0\" /> <path d=\"M19 6l0 6\" /></svg>","trash":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 7l16 0\" /> <path d=\"M10 11l0 6\" /> <path d=\"M14 11l0 6\" /> <path d=\"M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12\" /> <path d=\"M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3\" /></svg>","umbrella":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 12a8 8 0 0 1 16 0z\" /> <path d=\"M12 12v6a2 2 0 0 0 4 0\" /></svg>","upload":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2\" /> <path d=\"M7 9l5 -5l5 5\" /> <path d=\"M12 4l0 12\" /></svg>","x":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6l-12 12\" /> <path d=\"M6 6l12 12\" /></svg>"};
+const ICONS = {"armchair":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 11a2 2 0 0 1 2 2v2h10v-2a2 2 0 1 1 4 0v4a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2z\" /> <path d=\"M5 11v-5a3 3 0 0 1 3 -3h8a3 3 0 0 1 3 3v5\" /> <path d=\"M6 19v2\" /> <path d=\"M18 19v2\" /></svg>","arrows-shuffle":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 4l3 3l-3 3\" /> <path d=\"M18 20l3 -3l-3 -3\" /> <path d=\"M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5\" /> <path d=\"M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3\" /></svg>","beach":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17.553 16.75a7.5 7.5 0 0 0 -10.606 0\" /> <path d=\"M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z\" /> <path d=\"M16.732 10c1.658 -2.87 2.225 -5.644 1.268 -6.196c-.957 -.552 -3.075 1.326 -4.732 4.196\" /> <path d=\"M15 9l-3 5.196\" /> <path d=\"M3 19.25a2.4 2.4 0 0 1 1 -.25a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 1 .25\" /></svg>","briefcase":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z\" /> <path d=\"M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2\" /> <path d=\"M12 12l0 .01\" /> <path d=\"M3 13a20 20 0 0 0 18 0\" /></svg>","calendar-plus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12.5 21h-6.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v5\" /> <path d=\"M16 3v4\" /> <path d=\"M8 3v4\" /> <path d=\"M4 11h16\" /> <path d=\"M16 19h6\" /> <path d=\"M19 16v6\" /></svg>","calendar":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z\" /> <path d=\"M16 3v4\" /> <path d=\"M8 3v4\" /> <path d=\"M4 11h16\" /> <path d=\"M11 15h1\" /> <path d=\"M12 15v3\" /></svg>","camera":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2\" /> <path d=\"M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /></svg>","chart-bar":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M4 20h14\" /></svg>","check":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l5 5l10 -10\" /></svg>","chevron-left":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 6l-6 6l6 6\" /></svg>","chevron-right":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 6l6 6l-6 6\" /></svg>","cloud":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878\" /></svg>","confetti":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5h2\" /> <path d=\"M5 4v2\" /> <path d=\"M11.5 4l-.5 2\" /> <path d=\"M18 5h2\" /> <path d=\"M19 4v2\" /> <path d=\"M15 9l-1 1\" /> <path d=\"M18 13l2 -.5\" /> <path d=\"M18 19h2\" /> <path d=\"M19 18v2\" /> <path d=\"M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z\" /></svg>","download":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2\" /> <path d=\"M7 11l5 5l5 -5\" /> <path d=\"M12 4l0 12\" /></svg>","eye-off":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10.585 10.587a2 2 0 0 0 2.829 2.828\" /> <path d=\"M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87\" /> <path d=\"M3 3l18 18\" /></svg>","folder":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2\" /></svg>","folders":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 3h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2\" /> <path d=\"M17 16v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h2\" /></svg>","hanger":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 6a2 2 0 1 0 -4 0c0 1.667 .67 3 2 4h-.008l7.971 4.428a2 2 0 0 1 1.029 1.749v.823a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-.823a2 2 0 0 1 1.029 -1.749l7.971 -4.428\" /></svg>","heart-filled":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z\" /></svg>","heart":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572\" /></svg>","history":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 8l0 4l2 2\" /> <path d=\"M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5\" /></svg>","home":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l-2 0l9 -9l9 9l-2 0\" /> <path d=\"M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7\" /> <path d=\"M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6\" /></svg>","layout-grid":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /></svg>","leaf":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 21c.5 -4.5 2.5 -8 7 -10\" /> <path d=\"M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z\" /></svg>","luggage":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 6m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z\" /> <path d=\"M9 6v-1a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v1\" /> <path d=\"M6 10h12\" /> <path d=\"M6 16h12\" /> <path d=\"M9 20v1\" /> <path d=\"M15 20v1\" /></svg>","map-pin":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /> <path d=\"M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z\" /></svg>","moon":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z\" /></svg>","pencil":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4\" /> <path d=\"M13.5 6.5l4 4\" /></svg>","photo":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 8h.01\" /> <path d=\"M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z\" /> <path d=\"M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5\" /> <path d=\"M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3\" /></svg>","plane":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 10h4a2 2 0 0 1 0 4h-4l-4 7h-3l2 -7h-4l-2 2h-3l2 -4l-2 -4h3l2 2h4l-2 -7h3z\" /></svg>","plant":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 15h10v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-4z\" /> <path d=\"M12 9a6 6 0 0 0 -6 -6h-3v2a6 6 0 0 0 6 6h3\" /> <path d=\"M12 11a6 6 0 0 1 6 -6h3v1a6 6 0 0 1 -6 6h-3\" /> <path d=\"M12 15l0 -6\" /></svg>","plus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 5l0 14\" /> <path d=\"M5 12l14 0\" /></svg>","refresh":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4\" /> <path d=\"M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4\" /></svg>","run":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M4 17l5 1l.75 -1.5\" /> <path d=\"M15 21l0 -4l-4 -3l1 -6\" /> <path d=\"M7 12l0 -3l5 -1l3 3l3 1\" /></svg>","search":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0\" /> <path d=\"M21 21l-6 -6\" /></svg>","settings":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z\" /> <path d=\"M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /></svg>","share":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0\" /> <path d=\"M18 6m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0\" /> <path d=\"M18 18m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0\" /> <path d=\"M8.7 10.7l6.6 -3.4\" /> <path d=\"M8.7 13.3l6.6 3.4\" /></svg>","shirt":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0\" /></svg>","snowflake":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 4l2 1l2 -1\" /> <path d=\"M12 2v6.5l3 1.72\" /> <path d=\"M17.928 6.268l.134 2.232l1.866 1.232\" /> <path d=\"M20.66 7l-5.629 3.25l.01 3.458\" /> <path d=\"M19.928 14.268l-1.866 1.232l-.134 2.232\" /> <path d=\"M20.66 17l-5.629 -3.25l-2.99 1.738\" /> <path d=\"M14 20l-2 -1l-2 1\" /> <path d=\"M12 22v-6.5l-3 -1.72\" /> <path d=\"M6.072 17.732l-.134 -2.232l-1.866 -1.232\" /> <path d=\"M3.34 17l5.629 -3.25l-.01 -3.458\" /> <path d=\"M4.072 9.732l1.866 -1.232l.134 -2.232\" /> <path d=\"M3.34 7l5.629 3.25l2.99 -1.738\" /></svg>","sparkles":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z\" /></svg>","sun":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0\" /> <path d=\"M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7\" /></svg>","tag":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M3 6v5.172a2 2 0 0 0 .586 1.414l7.71 7.71a2.41 2.41 0 0 0 3.408 0l5.592 -5.592a2.41 2.41 0 0 0 0 -3.408l-7.71 -7.71a2 2 0 0 0 -1.414 -.586h-5.172a3 3 0 0 0 -3 3z\" /></svg>","temperature-minus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5\" /> <path d=\"M8 9l4 0\" /> <path d=\"M16 9l6 0\" /></svg>","temperature-plus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5\" /> <path d=\"M8 9l4 0\" /> <path d=\"M16 9l6 0\" /> <path d=\"M19 6l0 6\" /></svg>","trash":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 7l16 0\" /> <path d=\"M10 11l0 6\" /> <path d=\"M14 11l0 6\" /> <path d=\"M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12\" /> <path d=\"M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3\" /></svg>","umbrella":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 12a8 8 0 0 1 16 0z\" /> <path d=\"M12 12v6a2 2 0 0 0 4 0\" /></svg>","upload":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2\" /> <path d=\"M7 9l5 -5l5 5\" /> <path d=\"M12 4l0 12\" /></svg>","x":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6l-12 12\" /> <path d=\"M6 6l12 12\" /></svg>"};
 
 // ---------- Utilidades ----------
 const $ = (s, r = document) => r.querySelector(s);
@@ -462,10 +578,12 @@ const DB = (() => {
 let outfits = [];
 let settings = {};
 let view = "hoy";
+let agenda = { plans: {}, trips: [] }; // plans: { "YYYY-MM-DD": idConjunto }, trips: viajes
 const urls = new Map();
-const S = { occ: "", sugId: null, shown: new Set(), wxLoading: false, wxError: false, backup: null, installEvt: null };
+const S = { cal: "plan", calMonth: todayISO().slice(0, 7), occ: "", sugId: null, shown: new Set(), wxLoading: false, wxError: false, backup: null, installEvt: null };
 const F = { folder: null, q: "", fav: false, tags: new Set(), sort: "olvidado" };
 const saveSettings = () => DB.setMeta("settings", settings);
+const saveAgenda = () => DB.setMeta("agenda", agenda);
 
 function photoUrls(o) {
   let u = urls.get(o.id);
@@ -506,19 +624,40 @@ function wxTags(w) {
 async function fetchWeather(force = false) {
   const loc = settings.loc; if (!loc) return;
   const c = settings.wx;
-  if (!force && c && c.day === todayISO() && c.lat === loc.lat && c.lon === loc.lon && Date.now() - c.at < 3 * 36e5) return;
+  if (!force && c && settings.fc && c.day === todayISO() && c.lat === loc.lat && c.lon === loc.lon && Date.now() - c.at < 3 * 36e5) return;
   S.wxLoading = true; S.wxError = false; if (view === "hoy") renderHoy();
   try {
-    const u = `https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code&timezone=auto&forecast_days=1`;
+    const u = `https://api.open-meteo.com/v1/forecast?latitude=${loc.lat}&longitude=${loc.lon}&current=temperature_2m,weather_code&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code&timezone=auto&forecast_days=16`;
     const r = await fetch(u); if (!r.ok) throw new Error(r.status);
     const j = await r.json();
     settings.wx = { day: todayISO(), at: Date.now(), lat: loc.lat, lon: loc.lon, now: j.current.temperature_2m, code: j.daily.weather_code[0],
       max: j.daily.temperature_2m_max[0], min: j.daily.temperature_2m_min[0], rain: j.daily.precipitation_probability_max[0] ?? 0 };
+    settings.fc = { lat: loc.lat, lon: loc.lon, days: dailyDays(j) };
     await saveSettings();
   } catch { S.wxError = true; }
   S.wxLoading = false; S.sugId = null; S.shown.clear();
   if (view === "hoy") renderHoy();
 }
+// Previsión de 16 días (Open-Meteo) para planificar y para los viajes.
+function dailyDays(j) {
+  const d = j.daily, out = {};
+  d.time.forEach((t, i) => out[t] = { max: d.temperature_2m_max[i], min: d.temperature_2m_min[i], rain: d.precipitation_probability_max[i] ?? 0, code: d.weather_code[i] });
+  return out;
+}
+async function fetchDaily(lat, lon) {
+  const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,weather_code&timezone=auto&forecast_days=16`);
+  if (!r.ok) throw new Error(r.status);
+  return dailyDays(await r.json());
+}
+// Tiempo previsto de un día: el del viaje si cae en uno, si no el de tu ubicación.
+function wxOn(d) {
+  const t = tripOn(d);
+  if (t) return t.fc?.days?.[d] || null;
+  const f = settings.fc, l = settings.loc;
+  return f && l && f.lat === l.lat && f.lon === l.lon ? f.days?.[d] || null : null;
+}
+const wxShort = w => { const [desc, icon] = wxKind(w.code); return `<span class="wxs" title="${desc}">${ic(icon)}${Math.round(w.max)}° / ${Math.round(w.min)}°${w.rain >= 50 ? ` · ${w.rain}%` : ""}</span>`; };
+
 function useGPS() {
   if (!navigator.geolocation) return toast("Este navegador no da la ubicación. Busca tu ciudad.");
   toast("Buscando tu ubicación…");
@@ -534,10 +673,13 @@ function pickSuggestion() {
   const t = todayISO(), season = seasonNow(), w = wxToday(), wt = wxTags(w);
   const temp = wt.filter(x => x !== "lluvia");
   const base = outfits.filter(o => !o.wears?.includes(t));
+  // No proponer lo que ya tienes reservado para los próximos 7 días.
+  const soon = new Set(); for (let i = 1; i <= 7; i++) { const p = agenda.plans[addDays(t, i)]; if (p) soon.add(p); }
+  const free = o => !soon.has(o.id);
   const stages = [
-    o => (!S.occ || matches(o, "occasions", [S.occ])) && matches(o, "seasons", [season]) && (!temp.length || matches(o, "weather", temp)) && (daysSince(o) ?? 99) > 3,
-    o => (!S.occ || matches(o, "occasions", [S.occ])) && matches(o, "seasons", [season]) && (daysSince(o) ?? 99) > 3,
-    o => (!S.occ || matches(o, "occasions", [S.occ])) && (daysSince(o) ?? 99) > 3,
+    o => free(o) && (!S.occ || matches(o, "occasions", [S.occ])) && matches(o, "seasons", [season]) && (!temp.length || matches(o, "weather", temp)) && (daysSince(o) ?? 99) > 3,
+    o => free(o) && (!S.occ || matches(o, "occasions", [S.occ])) && matches(o, "seasons", [season]) && (daysSince(o) ?? 99) > 3,
+    o => free(o) && (!S.occ || matches(o, "occasions", [S.occ])) && (daysSince(o) ?? 99) > 3,
     o => !S.occ || matches(o, "occasions", [S.occ]),
   ];
   let pool = [];
@@ -567,8 +709,8 @@ function whyText(o) {
 }
 
 // ---------- Pantallas ----------
-const TITLES = { hoy: "Hoy", vestidor: "Vestidor", historial: "Historial", ajustes: "Ajustes" };
-const TABS = { hoy: ["home", "Hoy"], vestidor: ["hanger", "Vestidor"], historial: ["calendar", "Historial"], ajustes: ["settings", "Ajustes"] };
+const TITLES = { hoy: "¿Qué nos ponemos hoy", vestidor: "Vestidor", historial: "Calendario", ajustes: "Ajustes" };
+const TABS = { hoy: ["home", "Hoy"], vestidor: ["hanger", "Vestidor"], historial: ["calendar", "Calendario"], ajustes: ["settings", "Ajustes"] };
 
 function setView(v, animate = true) {
   view = v;
@@ -576,6 +718,7 @@ function setView(v, animate = true) {
   document.querySelectorAll(".tab").forEach(b => b.dataset.view === v ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current"));
   const inF = v === "vestidor" && F.folder;
   $("#title").textContent = inF ? folderName(F.folder) : TITLES[v];
+  $("#title").classList.toggle("q", v === "hoy");
   $("#backBtn").hidden = !inF;
   if (animate) { document.body.classList.remove("anim"); void document.body.offsetWidth; document.body.classList.add("anim"); setTimeout(() => document.body.classList.remove("anim"), 700); }
   render();
@@ -584,7 +727,7 @@ function setView(v, animate = true) {
 function render() {
   $("#subtitle").textContent = view === "hoy" ? fmtLong.format(new Date())
     : view === "vestidor" ? (F.folder ? countText(outfits.filter(o => inFolder(o, F.folder)).length) : "Tus carpetas") : "";
-  ({ hoy: renderHoy, vestidor: renderVestidor, historial: renderHistorial, ajustes: renderAjustes })[view]();
+  ({ hoy: renderHoy, vestidor: renderVestidor, historial: renderCal, ajustes: renderAjustes })[view]();
 }
 
 const isStandalone = () => matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
@@ -646,8 +789,13 @@ function renderHoy() {
       <div class="worn"><img src="${photoUrls(o).t}" alt=""><div class="t"><b>${esc(nameOf(o))}</b><small class="mut">${timesText(o.wears.length)} en total</small></div>
       <button class="btn sm" data-act="unwear" data-id="${o.id}">Deshacer</button></div>`).join("")}</div></section>`;
   }
+  const plan = planFor(t), planPending = plan && !worn.includes(plan);
+  if (planPending) {
+    h += `<section><h2>Lo tenías pensado para hoy</h2><div class="card"><div class="worn"><img src="${photoUrls(plan).t}" alt="" data-act="open" data-id="${plan.id}" style="cursor:pointer"><div class="t"><b>${esc(nameOf(plan))}</b><small class="mut">${sinceText(plan)}</small></div>
+      <button class="btn primary sm" data-act="wear" data-id="${plan.id}">${ic("check")}Me lo pongo</button></div></div></section>`;
+  }
   const occ = [["", "Cualquiera"], ...TAGS.occasions.items];
-  h += `<section><h2>${worn.length ? "¿Otro para luego?" : "¿Qué me pongo hoy?"}</h2>
+  h += `<section><h2>${worn.length ? "¿Otro para luego?" : planPending ? "¿O prefieres otro?" : "Mi sugerencia"}</h2>
     <div class="chips scroll" style="margin-bottom:12px">${occ.map(i => i.length === 2
       ? `<button type="button" class="chip noi" aria-pressed="${S.occ === ""}" data-act="occ" data-v="">${i[1]}</button>`
       : chipHTML("occasions", i, S.occ === i[0], "occ")).join("")}</div>
@@ -745,9 +893,8 @@ function renderGrid() {
   $("#grid").innerHTML = list.length ? list.map(tileHTML).join("") : `<p class="mut" style="grid-column:1/-1;padding:24px 0;text-align:center">Ningún conjunto con estos filtros.</p>`;
 }
 
-function renderHistorial() {
-  const el = $("#v-historial");
-  if (!outfits.length) { el.innerHTML = emptyHTML("Sin historial todavía", "Cuando marques «Me lo pongo», aquí verás qué llevaste cada día."); return; }
+function renderHistorial(el) {
+  if (!outfits.length) { el.innerHTML = segHTML() + emptyHTML("Sin historial todavía", "Cuando marques «Me lo pongo», aquí verás qué llevaste cada día."); return; }
   const t = todayISO(), month = t.slice(0, 7);
   const events = [];
   outfits.forEach(o => (o.wears || []).forEach(d => events.push({ d, o })));
@@ -756,7 +903,7 @@ function renderHistorial() {
   const never = outfits.filter(o => !o.wears?.length).length;
   const forgotten = outfits.filter(o => { const d = daysSince(o); return d == null || d >= 30; })
     .sort((a, b) => (daysSince(b) ?? 1e6) - (daysSince(a) ?? 1e6)).slice(0, 12);
-  let h = `<div class="stats">
+  let h = segHTML() + `<div class="stats">
     <div class="card stat"><b>${outfits.length}</b><span>Conjuntos</span></div>
     <div class="card stat"><b>${thisMonth}</b><span>Días este mes</span></div>
     <div class="card stat"><b>${never}</b><span>Sin estrenar</span></div></div>`;
@@ -795,11 +942,13 @@ async function renderAjustes() {
   el.innerHTML = `
     <section class="card set" id="set-install"><div class="hd"><span class="tl t-blue">${ic("download")}</span><div><b>Instalar en el móvil</b><small>${isStandalone() ? "Instalada" : "Android y iPhone"}</small></div></div>${install}</section>
     <section class="card set" id="set-backup"><div class="hd"><span class="tl t-green">${ic("photo")}</span><div><b>Copia de seguridad</b><small>Archivo .zip con fotos y datos</small></div></div>${bk}</section>
+    <section class="card set" id="set-colors"><div class="hd"><span class="tl t-red">${ic("sparkles")}</span><div><b>Personalizar</b><small>Colores de la app en este móvil</small></div></div>
+      ${colorsHTML()}${Object.keys(getColors()).length ? `<div class="row-btns" style="margin-top:14px"><button class="btn sm" data-act="color-reset">${ic("refresh")}Volver a los colores originales</button></div>` : ""}</section>
     <section class="card set"><div class="hd"><span class="tl t-amber">${ic("sun")}</span><div><b>Tiempo</b><small>${loc ? esc(loc.name) : "Desactivado"}</small></div></div>
       <p>Se consulta en Open-Meteo con tu ubicación aproximada (unos 1 km). No se envía nada más.</p>
       <div class="row-btns"><button class="btn sm" data-act="loc-gps">${ic("map-pin")}Mi ubicación</button><button class="btn sm" data-act="loc-city">${ic("search")}Ciudad</button>${loc ? `<button class="btn sm danger" data-act="loc-clear">Quitar</button>` : ""}</div></section>
     <section class="card set"><div class="hd"><span class="tl t-violet">${ic("settings")}</span><div><b>Almacenamiento</b><small id="st-sum">Calculando…</small></div></div><div id="st-body"></div></section>
-    <p class="mut" style="text-align:center;font-size:13px;margin-top:20px">DressKS · versión 1.1 · tus datos no salen de este dispositivo</p>`;
+    <p class="mut" style="text-align:center;font-size:13px;margin-top:20px">DressKS · versión 1.2 · tus datos no salen de este dispositivo</p>`;
   try {
     const est = await navigator.storage?.estimate?.();
     const persisted = await navigator.storage?.persisted?.();
@@ -809,6 +958,271 @@ async function renderAjustes() {
     $("#st-body").innerHTML = `${quota ? `<div class="meter"><i style="width:${Math.max(1, Math.min(100, used / quota * 100)).toFixed(1)}%"></i></div>` : ""}
       <p style="margin:6px 0 0">${persisted ? "Almacenamiento protegido: el navegador no borrará tus fotos para liberar espacio." : "El navegador podría borrar los datos si falta espacio o si no abres la app en mucho tiempo. Instalarla y hacer copias lo evita."}</p>`;
   } catch {}
+}
+
+// ---------- Calendario: planificar y viajes ----------
+const addDays = (s, n) => { const d = parseISO(s); d.setDate(d.getDate() + n); return iso(d); };
+const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+const planFor = d => { const id = agenda.plans[d]; return id ? byId(id) || null : null; };
+const tripOn = d => agenda.trips.find(t => t.from <= d && d <= t.to);
+const tripDays = t => { const out = []; for (let d = t.from; d <= t.to && out.length < 62; d = addDays(d, 1)) out.push(d); return out; };
+const fmtDM = new Intl.DateTimeFormat("es-ES", { day: "numeric", month: "short" });
+const fmtDay = d => fmtLong.format(parseISO(d));
+const dayName = d => { const t = todayISO(); return d === t ? "Hoy" : d === addDays(t, 1) ? "Mañana" : d === addDays(t, -1) ? "Ayer" : cap(fmtDay(d)); };
+function rangeText(t) { const n = tripDays(t).length; return `${fmtDM.format(parseISO(t.from))} – ${fmtDM.format(parseISO(t.to))} · ${n} ${n === 1 ? "día" : "días"}`; }
+
+function segHTML() {
+  const seg = [["plan", "calendar", "Planificar"], ["viajes", "luggage", "Viajes"], ["historial", "history", "Historial"]];
+  return `<div class="seg">${seg.map(([k, i, l]) => `<button data-act="cal-seg" data-v="${k}" aria-pressed="${S.cal === k}">${ic(i)}${l}</button>`).join("")}</div>`;
+}
+function renderCal() {
+  const el = $("#v-historial");
+  if (S.cal === "historial") return renderHistorial(el);
+  if (S.cal === "viajes") return renderTrips(el);
+  renderPlan(el);
+}
+function renderPlan(el) {
+  const t = todayISO(), [y, m] = S.calMonth.split("-").map(Number);
+  const first = new Date(y, m - 1, 1), n = new Date(y, m, 0).getDate(), off = (first.getDay() + 6) % 7;
+  let cells = "";
+  for (let i = 0; i < off; i++) cells += `<span class="cday out"></span>`;
+  for (let k = 1; k <= n; k++) {
+    const d = iso(new Date(y, m - 1, k)), past = d < t;
+    const worn = d <= t ? outfits.find(o => o.wears?.includes(d)) : null;
+    const plan = !worn && d >= t ? planFor(d) : null;
+    const o = worn || plan, trip = tripOn(d);
+    const cls = ["cday", past && "past", d === t && "today", o && "has", plan && "plan"].filter(Boolean).join(" ");
+    const lbl = `${cap(fmtDay(d))}${worn ? ". Llevaste " + nameOf(worn) : plan ? ". Previsto: " + nameOf(plan) : ""}${trip ? ". De viaje" : ""}`;
+    cells += `<button class="${cls}" data-act="day" data-d="${d}" aria-label="${esc(lbl)}">${o ? `<img src="${photoUrls(o).t}" alt="" loading="lazy">` : ""}<span class="n">${k}</span>${plan ? `<span class="pin">${ic("calendar-plus")}</span>` : ""}${trip ? `<span class="tr"></span>` : ""}</button>`;
+  }
+  const wd = ["L", "M", "X", "J", "V", "S", "D"].map(x => `<span>${x}</span>`).join("");
+  const next = Object.keys(agenda.plans).filter(d => d >= t && planFor(d)).sort().slice(0, 14);
+  let h = segHTML() + `<div class="mnav"><button class="iconbtn" data-act="cal-month" data-v="-1" aria-label="Mes anterior">${ic("chevron-left")}</button><b>${fmtMonth.format(first)}</b>${S.calMonth !== t.slice(0, 7) ? `<button class="btn sm" data-act="cal-month" data-v="0">Hoy</button>` : ""}<button class="iconbtn" data-act="cal-month" data-v="1" aria-label="Mes siguiente">${ic("chevron-right")}</button></div>
+    <section class="card cal"><div class="wd">${wd}</div><div class="days">${cells}</div>
+    <div class="legend"><span><i style="background:var(--accent)"></i>Planificado</span><span><i style="background:var(--violet)"></i>De viaje</span></div></section>`;
+  if (!outfits.length) h += emptyHTML("Primero, tus conjuntos", "Añade algunos conjuntos y luego podrás repartirlos por los días.");
+  else if (next.length) h += `<section><h2>Próximos días</h2><div class="card" style="padding:6px 8px">${next.map(d => {
+      const o = planFor(d), dd = parseISO(d), w = wxOn(d), tr = tripOn(d);
+      return `<button class="hrow" data-act="day" data-d="${d}"><div class="d"><b>${dd.getDate()}</b><small>${fmtWd.format(dd)}</small></div><img src="${photoUrls(o).t}" alt="" loading="lazy">
+        <div class="t"><b>${esc(nameOf(o))}</b><small class="mut">${d === t ? "Hoy" : d === addDays(t, 1) ? "Mañana" : fmtDM.format(dd)}${tr ? " · " + esc(tr.place.name) : ""}</small></div>${w ? wxShort(w) : ""}</button>`; }).join("")}</div></section>`;
+  else h += `<p class="mut" style="text-align:center;margin-top:8px">Toca un día para dejarle un conjunto preparado.</p>`;
+  el.innerHTML = h;
+}
+
+// Hoja de un día
+function openDay(d) { S.day = d; renderDay(); const dl = $("#d-day"); if (!dl.open) openD(dl); dl.scrollTop = 0; }
+function renderDay() {
+  const d = S.day, t = todayISO(), plan = planFor(d), trip = tripOn(d), w = wxOn(d);
+  $("#day-title").textContent = dayName(d);
+  let h = "";
+  const info = [];
+  if (dayName(d) !== cap(fmtDay(d))) info.push(`${ic("calendar")}${cap(fmtDay(d))}`);
+  if (trip) info.push(`${ic("luggage")}${esc(trip.place.name)}`);
+  if (w && d >= t) info.push(wxShort(w));
+  if (info.length) h += `<div class="info-line" style="flex-wrap:wrap">${info.join("")}</div>`;
+  if (d >= t) {
+    h += `<section><h2>Previsto</h2><div class="card">` + (plan
+      ? `<div class="slot"><img class="ph" src="${photoUrls(plan).t}" alt=""><div class="t"><b>${esc(nameOf(plan))}</b><small class="mut">${sinceText(plan)}</small></div></div>
+         <div class="row-btns" style="margin-top:12px">${d === t && !plan.wears?.includes(t) ? `<button class="btn primary sm" data-act="wear" data-id="${plan.id}">${ic("check")}Me lo pongo</button>` : ""}<button class="btn sm" data-act="pick" data-mode="plan">${ic("arrows-shuffle")}Cambiar</button><button class="btn sm danger" data-act="plan-clear">Quitar</button></div>`
+      : `<div class="slot"><span class="ph">${ic("plus")}</span><div class="t"><b>Nada previsto</b><small class="mut">Déjale un conjunto preparado.</small></div></div>
+         <div class="row-btns" style="margin-top:12px"><button class="btn primary sm" data-act="pick" data-mode="plan">${ic("hanger")}Elegir</button><button class="btn sm" data-act="plan-auto">${ic("sparkles")}Que elija DressKS</button></div>`) + `</div></section>`;
+  }
+  if (d <= t) {
+    const worn = outfits.filter(o => o.wears?.includes(d));
+    h += `<section><h2>${d === t ? "Llevas" : "Llevaste"}</h2><div class="card">${worn.map(o => `<div class="slot"><img class="ph" src="${photoUrls(o).t}" alt=""><div class="t"><b>${esc(nameOf(o))}</b><small class="mut">${timesText(o.wears.length)} en total</small></div><button class="btn sm" data-act="day-unwear" data-id="${o.id}">Quitar</button></div>`).join("") || `<p class="mut">No apuntaste nada este día.</p>`}
+      ${outfits.length ? `<div class="row-btns" style="margin-top:12px"><button class="btn sm" data-act="pick" data-mode="worn">${ic("plus")}Apuntar lo que ${d === t ? "llevo" : "llevé"}</button></div>` : ""}</div></section>`;
+  }
+  $("#day-body").innerHTML = h;
+}
+
+// Qué conjuntos encajan con un día: estación de esa fecha, tiempo previsto y ocasión del viaje.
+function fitOf(o, d, occs) {
+  const wt = wxTags(wxOn(d)), temp = wt.filter(x => x !== "lluvia");
+  const okSeason = matches(o, "seasons", [seasonNow(parseISO(d))]);
+  const okWx = !temp.length || matches(o, "weather", temp);
+  const okOcc = !occs?.length || matches(o, "occasions", occs);
+  let s = (okSeason ? 40 : 0) + (okWx ? 25 : 0) + (okOcc ? 25 : 0);
+  if (wt.includes("lluvia") && o.weather?.includes("lluvia")) s += 8;
+  const ds = daysSince(o); s += ds == null ? 10 : Math.min(ds, 30) / 3;
+  if (o.fav) s += 5;
+  return { s, ok: okSeason && okWx && okOcc };
+}
+function ranked(d, occs, avoid = new Set(), jitter = 0) {
+  return outfits.map(o => { const f = fitOf(o, d, occs); return { o, ok: f.ok, s: f.s - (avoid.has(o.id) ? 60 : 0) + Math.random() * jitter }; }).sort((a, b) => b.s - a.s);
+}
+function nearbyPlans(d, days = 7) {
+  const s = new Set();
+  for (let i = -days; i <= days; i++) { if (!i) continue; const id = agenda.plans[addDays(d, i)]; if (id) s.add(id); }
+  return s;
+}
+
+// Selector de conjunto para un día
+function openPick(mode, d, tripId) {
+  S.pick = { mode, d, tripId };
+  const occs = tripId ? agenda.trips.find(t => t.id === tripId)?.occasions : tripOn(d)?.occasions;
+  let list = ranked(d, occs, mode === "worn" ? new Set() : nearbyPlans(d));
+  if (mode === "worn") list = list.filter(x => !x.o.wears?.includes(d));
+  const good = list.filter(x => x.ok), rest = list.filter(x => !x.ok), w = d >= todayISO() ? wxOn(d) : null;
+  const cur = mode !== "worn" && planFor(d);
+  $("#pick-title").textContent = mode === "worn" ? "¿Qué llevaste?" : "Elegir conjunto";
+  const tile = x => `<button class="tile-o" data-act="pick-o" data-id="${x.o.id}" aria-label="${esc(nameOf(x.o))}"><img src="${photoUrls(x.o).t}" alt="" loading="lazy"><span class="badge${x.o !== cur && daysSince(x.o) == null ? " new" : ""}">${x.o === cur ? "Elegido" : sinceText(x.o)}</span>${x.o.fav ? `<span class="favb">${ic("heart-filled")}</span>` : ""}</button>`;
+  let h = `<div class="info-line" style="flex-wrap:wrap">${ic("calendar")}${dayName(d)}${w ? wxShort(w) : ""}</div>`;
+  if (cur) h += `<button class="btn sm danger" data-act="pick-none" style="margin-bottom:14px">Dejar el día libre</button>`;
+  if (!list.length) h += `<p class="mut">No hay conjuntos para elegir.</p>`;
+  else if (good.length && rest.length) h += `<div class="pick-sec">Van bien ese día</div><div class="grid">${good.map(tile).join("")}</div><div class="pick-sec">Otros</div><div class="grid">${rest.map(tile).join("")}</div>`;
+  else h += `<div class="grid">${list.map(tile).join("")}</div>`;
+  $("#pick-body").innerHTML = h;
+  openD($("#d-pick")); $("#d-pick").scrollTop = 0;
+}
+function refreshOpen() { if ($("#d-day").open) renderDay(); if ($("#d-trip").open) renderTrip(); render(); }
+function touchTrip(id) { const t = agenda.trips.find(x => x.id === id); if (t) t.updated = Date.now(); }
+async function onPicked(id) {
+  const { mode, d, tripId } = S.pick;
+  if (mode === "worn") await setWornOn(id, d, true);
+  else { agenda.plans[d] = id; if (tripId) touchTrip(tripId); await saveAgenda(); }
+  closeD($("#d-pick"));
+  refreshOpen();
+}
+
+// Viajes
+function renderTrips(el) {
+  const t = todayISO();
+  const up = agenda.trips.filter(x => x.to >= t).sort((a, b) => a.from < b.from ? -1 : 1);
+  const past = agenda.trips.filter(x => x.to < t).sort((a, b) => a.from > b.from ? -1 : 1);
+  const card = x => {
+    const days = tripDays(x), ids = days.map(d => agenda.plans[d]).filter(id => byId(id)), uniq = [...new Set(ids)];
+    const k = daysBetween(t, x.from), when = x.to < t ? "" : x.from <= t ? " · Ahora" : k === 1 ? " · Mañana" : ` · En ${k} días`;
+    return `<button class="card trip" data-act="trip-open" data-id="${x.id}"><span class="tl t-violet">${ic("luggage")}</span><div class="t"><b>${esc(x.place.name)}</b><small>${rangeText(x)}${when}</small>
+      <small style="display:block">${ids.length} de ${days.length} días con conjunto</small>${uniq.length ? `<div class="thumbs">${uniq.slice(0, 6).map(id => `<img src="${photoUrls(byId(id)).t}" alt="">`).join("")}</div>` : ""}</div>${ic("chevron-right")}</button>`;
+  };
+  let h = segHTML() + `<button class="btn primary block" data-act="trip-new" style="margin-bottom:18px">${ic("plane")}Nuevo viaje</button>`;
+  if (!agenda.trips.length) h += `<section class="card empty"><div class="big-tl t-violet">${ic("luggage")}</div><b>Prepara tu maleta</b><p>Dime adónde vas y cuándo. Miro el tiempo de allí, te propongo un conjunto para cada día y te hago la lista de prendas.</p></section>`;
+  if (up.length) h += `<section><h2>Próximos viajes</h2>${up.map(card).join("")}</section>`;
+  if (past.length) h += `<section><h2>Viajes pasados</h2>${past.map(card).join("")}</section>`;
+  el.innerHTML = h;
+}
+
+let TF = null;
+function openTripForm(trip) {
+  const t = todayISO();
+  TF = trip ? { id: trip.id, place: trip.place, occasions: new Set(trip.occasions || []) } : { id: null, place: null, occasions: new Set() };
+  S.tfCities = [];
+  $("#tf-title").textContent = trip ? "Editar viaje" : "Nuevo viaje";
+  $("#tf-q").value = ""; $("#tf-res").innerHTML = "";
+  $("#tf-from").value = trip?.from || addDays(t, 1); $("#tf-to").value = trip?.to || addDays(t, 3);
+  $("#tf-from").min = trip ? "" : t;
+  renderTF();
+  const d = $("#d-tripform");
+  if ($("#d-trip").open) swapD($("#d-trip"), d); else openD(d);
+  d.scrollTop = 0;
+}
+function renderTF() {
+  $("#tf-place").innerHTML = TF.place ? `<div class="picked">${ic("map-pin")}<span>${esc(TF.place.name)}${TF.place.sub ? ` <small style="font-weight:400">· ${esc(TF.place.sub)}</small>` : ""}</span></div>` : "";
+  $("#tf-occ").innerHTML = TAGS.occasions.items.map(i => chipHTML("occasions", i, TF.occasions.has(i[0]), "tf-occ")).join("");
+}
+async function searchCities(q) {
+  const r = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q)}&count=6&language=es&format=json`);
+  return (await r.json()).results || [];
+}
+const cityHTML = (c, i, act) => `<button data-act="${act}" data-i="${i}"><b>${esc(c.name)}</b><small>${esc([c.admin2, c.admin1, c.country].filter(Boolean).join(", "))}</small></button>`;
+async function saveTripForm() {
+  const from = $("#tf-from").value, to = $("#tf-to").value;
+  if (!TF.place) { $("#tf-q").focus(); return toast("Busca y elige el destino"); }
+  if (!from || !to || to < from) return toast("Revisa las fechas: la vuelta va después de la ida");
+  if (daysBetween(from, to) > 30) return toast("Como mucho, viajes de 31 días");
+  let trip = TF.id && agenda.trips.find(x => x.id === TF.id);
+  if (trip) {
+    const moved = trip.place.lat !== TF.place.lat || trip.place.lon !== TF.place.lon;
+    Object.assign(trip, { place: TF.place, from, to, occasions: [...TF.occasions], updated: Date.now() });
+    if (moved) delete trip.fc;
+  } else {
+    trip = { id: uid(), place: TF.place, from, to, occasions: [...TF.occasions], packed: [], created: Date.now(), updated: Date.now() };
+    agenda.trips.push(trip);
+  }
+  await saveAgenda();
+  S.tripId = trip.id; renderTrip();
+  swapD($("#d-tripform"), $("#d-trip")); $("#d-trip").scrollTop = 0;
+  render(); loadTripWx(trip);
+}
+
+const curTrip = () => agenda.trips.find(x => x.id === S.tripId);
+function openTrip(id) { S.tripId = id; renderTrip(); openD($("#d-trip")); $("#d-trip").scrollTop = 0; loadTripWx(curTrip()); }
+async function loadTripWx(trip) {
+  const t = todayISO();
+  if (!trip || trip.to < t || trip.from > addDays(t, 15)) return;
+  if (trip.fc && Date.now() - trip.fc.at < 3 * 36e5) return;
+  S.tripWx = trip.id; if ($("#d-trip").open) renderTrip();
+  try { trip.fc = { at: Date.now(), days: await fetchDaily(trip.place.lat, trip.place.lon) }; await saveAgenda(); } catch { S.tripWxErr = trip.id; }
+  S.tripWx = null;
+  if ($("#d-trip").open && S.tripId === trip.id) renderTrip();
+}
+// Lista de la maleta: prendas de los conjuntos elegidos, sin repetir.
+function packList(trip) {
+  const ids = [...new Set(tripDays(trip).map(d => agenda.plans[d]).filter(id => byId(id)))];
+  const g = new Map(), bare = [];
+  for (const id of ids) {
+    const o = byId(id);
+    if (!o.garments?.length) bare.push(o);
+    for (const x of o.garments || []) { const k = x.toLowerCase(), e = g.get(k) || { name: x, n: 0 }; e.n++; g.set(k, e); }
+  }
+  const items = [...g.entries()].sort((a, b) => a[1].name.localeCompare(b[1].name, "es")).map(([k, e]) => ({ k, label: e.name, sub: e.n > 1 ? `en ${e.n} conjuntos` : "" }));
+  bare.forEach(o => items.push({ k: "o:" + o.id, label: nameOf(o), sub: "sin prendas apuntadas" }));
+  return items;
+}
+function renderTrip() {
+  const trip = curTrip(); if (!trip) return;
+  const t = todayISO(), days = tripDays(trip);
+  $("#trip-title").textContent = trip.place.name;
+  const hasFc = days.some(d => trip.fc?.days?.[d]);
+  const note = trip.to < t ? "Viaje terminado."
+    : hasFc ? "Con el tiempo previsto allí."
+    : trip.from > addDays(t, 15) ? "El tiempo de allí aparece unos 15 días antes. Mientras, me guío por la estación."
+    : S.tripWx === trip.id ? "Consultando el tiempo de allí…" : "No se pudo consultar el tiempo de allí. Me guío por la estación.";
+  const occTxt = trip.occasions?.length ? ` Para: ${trip.occasions.map(v => tagInfo("occasions", v)[1].toLowerCase()).join(", ")}.` : "";
+  const filled = days.filter(d => planFor(d)).length;
+  const items = packList(trip), packed = new Set(trip.packed || []), done = items.filter(i => packed.has(i.k)).length;
+  let h = `<div class="info-line">${ic("calendar")}${rangeText(trip)}</div><p class="mut" style="font-size:14px;margin:-6px 0 16px">${note}${occTxt}</p>`;
+  h += `<section><h2>Un conjunto por día<span class="more">${filled} de ${days.length}</span></h2>
+    ${filled < days.length && outfits.length ? `<button class="btn primary block" data-act="trip-fill" style="margin-bottom:10px">${ic("sparkles")}Rellenar los días vacíos</button>` : ""}
+    <div class="card" style="padding:6px 8px">${days.map(d => {
+      const o = planFor(d), dd = parseISO(d), w = trip.fc?.days?.[d];
+      return `<button class="tday" data-act="pick" data-mode="trip" data-d="${d}"><div class="d"><b>${dd.getDate()}</b><small>${fmtWd.format(dd)}</small></div>${o ? `<img src="${photoUrls(o).t}" alt="">` : `<span class="ph">${ic("plus")}</span>`}
+        <div class="t"><b>${o ? esc(nameOf(o)) : "Elegir conjunto"}</b>${w ? wxShort(w) : `<small class="mut">${tagInfo("seasons", seasonNow(dd))[1]}</small>`}</div></button>`; }).join("")}</div></section>`;
+  h += `<section><h2>La maleta<span class="more">${items.length ? `${done} de ${items.length} dentro` : ""}</span></h2>`
+    + (items.length ? `<div class="card checks" style="padding:4px 14px">${items.map(i => `<label class="check"><input type="checkbox" data-pack="${esc(i.k)}"${packed.has(i.k) ? " checked" : ""}><span>${esc(i.label)}${i.sub ? ` <small>· ${i.sub}</small>` : ""}</span></label>`).join("")}</div>`
+      : `<p class="mut">Cuando elijas conjuntos para los días, aquí saldrá la lista de prendas que meter.</p>`) + `</section>`;
+  $("#trip-body").innerHTML = h;
+}
+async function fillTrip() {
+  const trip = curTrip(); if (!trip) return;
+  const days = tripDays(trip), used = new Map();
+  days.forEach(d => { const id = agenda.plans[d]; if (byId(id)) used.set(id, (used.get(id) || 0) + 1); });
+  let n = 0;
+  for (const d of days) {
+    if (planFor(d)) continue;
+    const best = outfits.map(o => ({ o, s: fitOf(o, d, trip.occasions).s - (used.get(o.id) || 0) * 20 + Math.random() * 4 })).sort((a, b) => b.s - a.s)[0];
+    if (!best) break;
+    agenda.plans[d] = best.o.id; used.set(best.o.id, (used.get(best.o.id) || 0) + 1); n++;
+  }
+  trip.updated = Date.now(); await saveAgenda(); renderTrip(); render();
+  toast(n ? `${n} ${n === 1 ? "día rellenado" : "días rellenados"}. Toca uno para cambiarlo.` : "No hay días vacíos");
+}
+async function shareTrip() {
+  const trip = curTrip(); if (!trip) return;
+  const items = packList(trip), packed = new Set(trip.packed || []);
+  const text = [`Maleta para ${trip.place.name} (${rangeText(trip)})`, "",
+    ...tripDays(trip).map(d => { const o = planFor(d), dd = parseISO(d); return `${cap(fmtWd.format(dd))} ${dd.getDate()}: ${o ? nameOf(o) : "sin elegir"}`; }),
+    ...(items.length ? ["", "Prendas:", ...items.map(i => `${packed.has(i.k) ? "[x]" : "[ ]"} ${i.label}`)] : [])].join("\n");
+  if (navigator.share) { try { await navigator.share({ title: "Maleta", text }); return; } catch (e) { if (e.name === "AbortError") return; } }
+  try { await navigator.clipboard.writeText(text); toast("Lista copiada"); } catch { toast("No se pudo compartir"); }
+}
+async function deleteTrip() {
+  const trip = curTrip(); if (!trip) return;
+  if (!await askDelete("Se borrará el viaje y los conjuntos que tenía previstos esos días. Tus fotos no se tocan.")) return;
+  const t = todayISO();
+  tripDays(trip).forEach(d => { if (d >= t) delete agenda.plans[d]; });
+  agenda.trips = agenda.trips.filter(x => x.id !== trip.id);
+  await saveAgenda(); closeD($("#d-trip")); toast("Viaje eliminado"); render();
 }
 
 // ---------- Detalle ----------
@@ -921,15 +1335,18 @@ async function onPhoto(file) {
 }
 
 // ---------- Me lo pongo ----------
-async function setWorn(id, on) {
+async function setWornOn(id, d, on) {
   const o = byId(id); if (!o) return;
-  const t = todayISO();
   const wears = new Set(o.wears || []);
-  on ? wears.add(t) : wears.delete(t);
+  on ? wears.add(d) : wears.delete(d);
   const n = { ...o, wears: [...wears].sort() };
   await DB.put(n);
   outfits[outfits.indexOf(o)] = n;
   urls.get(id) && (urls.get(id).v = n.updated);
+  if ($("#d-day").open) renderDay();
+}
+async function setWorn(id, on) {
+  await setWornOn(id, todayISO(), on);
   if (on) { toast("Apuntado. ¡Buen día!"); S.sugId = null; }
   if ($("#d-detail").open) closeD($("#d-detail"));
   render();
@@ -996,7 +1413,7 @@ async function makeBackup() {
       files.push({ name: `fotos/${o.id}.jpg`, data: new Uint8Array(await photo.arrayBuffer()) });
       files.push({ name: `miniaturas/${o.id}.jpg`, data: new Uint8Array(await thumb.arrayBuffer()) });
     }
-    const json = { app: "vestidor", version: 1, exported: new Date().toISOString(), outfits: meta };
+    const json = { app: "vestidor", version: 2, exported: new Date().toISOString(), outfits: meta, agenda: { plans: agenda.plans, trips: agenda.trips.map(({ fc, ...t }) => t) } };
     files.unshift({ name: "vestidor.json", data: new TextEncoder().encode(JSON.stringify(json, null, 1)) });
     S.backup = { blob: makeZip(files), count: outfits.length, name: `dressks-copia-${todayISO()}.zip` };
   } catch (e) { toast("No se pudo preparar la copia."); }
@@ -1037,6 +1454,15 @@ async function importBackup(file) {
     }
     await DB.putMany(list);
     outfits = await DB.all();
+    // Planes y viajes: se conservan los de este móvil y se añaden los que falten.
+    if (j.agenda) {
+      for (const [d, id] of Object.entries(j.agenda.plans || {})) if (!agenda.plans[d] && byId(id)) agenda.plans[d] = id;
+      for (const t of j.agenda.trips || []) {
+        const i = agenda.trips.findIndex(x => x.id === t.id);
+        if (i < 0) agenda.trips.push(t); else if ((t.updated || 0) > (agenda.trips[i].updated || 0)) agenda.trips[i] = t;
+      }
+      await saveAgenda();
+    }
     busy(false);
     toast(`Restaurado: ${added} nuevos${merged ? `, ${merged} actualizados` : ""}`);
     navigator.storage?.persist?.().catch(() => {});
@@ -1060,8 +1486,9 @@ document.querySelectorAll("dialog.sheet").forEach(d => {
   d.addEventListener("cancel", e => { e.preventDefault(); closeD(d); });
   d.addEventListener("click", e => { if (e.target === d) { const r = d.getBoundingClientRect(); if (e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) closeD(d); } });
 });
-function askDelete() {
+function askDelete(text = "Se borrará la foto y su historial. No se puede deshacer.") {
   const d = $("#d-ask");
+  $("#ask-text").textContent = text;
   return new Promise(res => {
     const done = v => { d.close(); $("#ask-yes").onclick = $("#ask-no").onclick = null; res(v); };
     $("#ask-yes").onclick = () => done(true); $("#ask-no").onclick = () => done(false);
@@ -1083,6 +1510,35 @@ function applyTheme() {
   $("#meta-theme").content = dark ? "#150a1d" : "#faf6ec";
 }
 matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", applyTheme);
+
+// ---------- Personalizar colores (se guardan en este dispositivo) ----------
+// Colores elegidos para que el texto blanco se lea bien encima, en modo día y noche.
+const PALETTE = {
+  accent: { label: "Botones principales", hint: "Botón de la cámara y botones destacados", items: [
+    ["", "Morado (original)", "#3a1650"], ["berenjena", "Berenjena", "#5b2140"], ["noche", "Azul noche", "#1e3a8a"], ["bosque", "Verde bosque", "#14532d"],
+    ["teja", "Teja", "#9a3412"], ["rosa", "Rosa", "#be185d"], ["grafito", "Grafito", "#27272a"]] },
+  hero: { label: "Tarjeta del tiempo", hint: "La tarjeta grande de la pantalla Hoy", items: [
+    ["", "Morado (original)", ["#2e1242", "#4b1f66"]], ["medianoche", "Medianoche", ["#0f1e3d", "#1e3a8a"]], ["oceano", "Océano", ["#083344", "#0e7490"]],
+    ["bosque", "Bosque", ["#0f2e1f", "#166534"]], ["atardecer", "Atardecer", ["#7c2d12", "#c2410c"]], ["frambuesa", "Frambuesa", ["#831843", "#be185d"]], ["grafito", "Grafito", ["#18181b", "#3f3f46"]]] },
+  brand: { label: "Detalles", hint: "El punto de los títulos, «Ahora», favoritos y casillas", items: [
+    ["", "Coral (original)", "#e5484d"], ["dorado", "Dorado", "#d97706"], ["rosa", "Rosa", "#ec4899"], ["turquesa", "Turquesa", "#0d9488"],
+    ["lavanda", "Lavanda", "#8b5cf6"], ["azul", "Azul", "#2563eb"]] },
+};
+function getColors() { try { return JSON.parse(store.get("dressks-colors") || "{}") || {}; } catch { return {}; } }
+function applyColors() {
+  const c = getColors(), pick = z => PALETTE[z].items.find(i => i[0] && i[0] === c[z]);
+  const a = pick("accent"), h = pick("hero"), b = pick("brand");
+  const vars = [a && `--accent:${a[2]}; --accent-ink:#fff;`, h && `--navy:${h[2][0]}; --navy-2:${h[2][1]};`, b && `--brand:${b[2]};`].filter(Boolean).join(" ");
+  let el = $("#custom-colors");
+  if (!el) { el = document.createElement("style"); el.id = "custom-colors"; document.head.append(el); }
+  // :not(#_) sube la prioridad por encima de los temas día/noche.
+  el.textContent = vars ? `:root:not(#_) { ${vars} }` : "";
+}
+function colorsHTML() {
+  const c = getColors();
+  return Object.entries(PALETTE).map(([z, p]) => `<div class="zone"><b>${p.label}</b><small>${p.hint}</small><div class="swatches">${p.items.map(([k, name, v]) =>
+    `<button class="sw" data-act="color" data-z="${z}" data-v="${k}" aria-pressed="${(c[z] || "") === k}" aria-label="${name}" title="${name}" style="background:${Array.isArray(v) ? `linear-gradient(135deg, ${v[0]}, ${v[1]})` : v}">${ic("check")}</button>`).join("")}</div></div>`).join("");
+}
 
 // ---------- Eventos ----------
 document.addEventListener("click", async e => {
@@ -1127,6 +1583,8 @@ document.addEventListener("click", async e => {
     case "ed-delete":
       if (await askDelete()) {
         await DB.del(ED.id); outfits = outfits.filter(o => o.id !== ED.id);
+        for (const d in agenda.plans) if (agenda.plans[d] === ED.id) delete agenda.plans[d];
+        await saveAgenda();
         const u = urls.get(ED.id); if (u) { URL.revokeObjectURL(u.t); URL.revokeObjectURL(u.p); urls.delete(ED.id); }
         closeD($("#d-editor")); toast("Conjunto eliminado"); render();
       }
@@ -1147,12 +1605,69 @@ document.addEventListener("click", async e => {
     case "backup-make": await makeBackup(); break;
     case "backup-share": await shareBackup(); break;
     case "import": $("#fileImport").value = ""; $("#fileImport").click(); break;
+    case "color": {
+      const c = getColors(), z = b.dataset.z;
+      if (v) c[z] = v; else delete c[z];
+      store.set("dressks-colors", JSON.stringify(c)); applyColors();
+      const y = scrollY; await renderAjustes(); scrollTo(0, y); break;
+    }
+    case "color-reset": { store.set("dressks-colors", "{}"); applyColors(); const y = scrollY; await renderAjustes(); scrollTo(0, y); toast("Colores originales"); break; }
+    // Calendario
+    case "cal-seg": S.cal = v; renderCal(); break;
+    case "cal-month": {
+      if (v === "0") S.calMonth = todayISO().slice(0, 7);
+      else { const [y, m] = S.calMonth.split("-").map(Number); S.calMonth = iso(new Date(y, m - 1 + +v, 1)).slice(0, 7); }
+      renderCal(); break;
+    }
+    case "day": openDay(b.dataset.d); break;
+    case "day-unwear": await setWornOn(id, S.day, false); render(); break;
+    case "pick": {
+      const mode = b.dataset.mode;
+      if (!outfits.length) { toast("Primero añade algún conjunto"); break; }
+      openPick(mode, b.dataset.d || S.day, mode === "trip" ? S.tripId : null); break;
+    }
+    case "pick-o": await onPicked(id); break;
+    case "pick-none": delete agenda.plans[S.pick.d]; if (S.pick.tripId) touchTrip(S.pick.tripId); await saveAgenda(); closeD($("#d-pick")); refreshOpen(); break;
+    case "plan-clear": delete agenda.plans[S.day]; await saveAgenda(); refreshOpen(); break;
+    case "plan-auto": {
+      const best = ranked(S.day, tripOn(S.day)?.occasions, nearbyPlans(S.day), 12)[0];
+      if (best) { agenda.plans[S.day] = best.o.id; await saveAgenda(); refreshOpen(); }
+      break;
+    }
+    case "trip-new": openTripForm(null); break;
+    case "trip-open": openTrip(id); break;
+    case "trip-edit": openTripForm(curTrip()); break;
+    case "trip-delete": await deleteTrip(); break;
+    case "trip-share": await shareTrip(); break;
+    case "trip-fill": await fillTrip(); break;
+    case "tf-city": {
+      const c = S.tfCities[+b.dataset.i];
+      TF.place = { name: c.name, sub: [c.admin1, c.country].filter(Boolean).join(", "), lat: +c.latitude.toFixed(2), lon: +c.longitude.toFixed(2) };
+      $("#tf-res").innerHTML = ""; $("#tf-q").value = ""; renderTF(); break;
+    }
+    case "tf-occ": TF.occasions.has(v) ? TF.occasions.delete(v) : TF.occasions.add(v); b.setAttribute("aria-pressed", TF.occasions.has(v)); break;
+    case "tf-save": await saveTripForm(); break;
   }
 });
 $("#filePhoto").addEventListener("change", e => onPhoto(e.target.files[0]));
 $("#fileImport").addEventListener("change", e => importBackup(e.target.files[0]));
 document.addEventListener("input", e => { if (e.target.id === "q") { F.q = e.target.value; renderGrid(); } });
-document.addEventListener("change", e => { if (e.target.id === "sort") { F.sort = e.target.value; renderGrid(); } });
+document.addEventListener("change", async e => {
+  if (e.target.id === "sort") { F.sort = e.target.value; renderGrid(); }
+  const k = e.target.dataset?.pack;
+  if (k != null) {
+    const trip = curTrip(); if (!trip) return;
+    const set = new Set(trip.packed || []); e.target.checked ? set.add(k) : set.delete(k);
+    trip.packed = [...set]; trip.updated = Date.now(); await saveAgenda(); renderTrip();
+  }
+});
+$("#tf-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const q = $("#tf-q").value.trim(); if (!q) return;
+  $("#tf-res").innerHTML = `<p class="mut">Buscando…</p>`;
+  try { S.tfCities = await searchCities(q); $("#tf-res").innerHTML = S.tfCities.length ? S.tfCities.map((c, i) => cityHTML(c, i, "tf-city")).join("") : `<p class="mut">No encuentro ese sitio.</p>`; }
+  catch { $("#tf-res").innerHTML = `<p class="mut">Sin conexión. Inténtalo más tarde.</p>`; }
+});
 $("#ed-g").addEventListener("keydown", e => { if (e.key === "Enter" || e.key === ",") { e.preventDefault(); addGarments(); } });
 $("#ed-g").addEventListener("blur", () => { if ($("#ed-g").value.trim()) addGarments(); });
 $("#city-form").addEventListener("submit", async e => {
@@ -1174,10 +1689,12 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden) { if
   document.querySelectorAll("[data-ic]").forEach(el => el.insertAdjacentHTML("afterbegin", ic(el.dataset.ic)));
   document.querySelectorAll(".tab").forEach(b => { const [i, l] = TABS[b.dataset.view]; b.innerHTML = `${ic(i)}<span>${l}</span>`; });
   $(".fab").innerHTML = ic("camera");
-  applyTheme();
+  applyTheme(); applyColors();
   try {
-    [outfits, settings] = await Promise.all([DB.all(), DB.getMeta("settings")]);
+    let ag;
+    [outfits, settings, ag] = await Promise.all([DB.all(), DB.getMeta("settings"), DB.getMeta("agenda")]);
     settings ||= {};
+    if (ag) agenda = { plans: ag.plans || {}, trips: ag.trips || [] };
   } catch {
     $("#v-hoy").innerHTML = emptyHTML("No puedo guardar datos aquí", "Este navegador no permite guardar fotos (¿modo privado?). Ábrela en una ventana normal.", false);
     return;

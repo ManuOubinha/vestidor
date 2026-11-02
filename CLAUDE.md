@@ -5,7 +5,7 @@ DressKS, vestidor virtual personal (PWA) para Android e iPhone. Hablar con el us
 ## Reglas
 
 - Todo es estático: `index.html` (un solo archivo), `sw.js`, `manifest.webmanifest`, `img/`. Sin dependencias ni build salvo `node tools/build-icons.mjs` tras añadir un SVG a `icons/`.
-- **Datos solo en el dispositivo** (IndexedDB `vestidor` (nombre interno, no cambiarlo o se pierden los datos): almacén `outfits` y `meta`). Nunca meter fotos ni datos reales en el repo.
+- **Datos solo en el dispositivo** (IndexedDB `vestidor` (nombre interno, no cambiarlo o se pierden los datos): almacén `outfits` y `meta`; en `meta`: `settings` y `agenda`). Nunca meter fotos ni datos reales en el repo.
 - Al cambiar cualquier archivo publicado, **subir `VERSION` en `sw.js`**, o los móviles seguirán con la versión guardada.
 - Rutas siempre relativas (se publica en una subcarpeta de GitHub Pages).
 - La línea `const ICONS = ...` de `index.html` es muy larga: leer el archivo con `offset`/`limit`.
@@ -30,3 +30,12 @@ Estética tipo **holded.com** (conceptos), pero con la paleta de DressKS elegida
 ## Carpetas (decisión del usuario, 2-nov-2026)
 
 La pestaña Vestidor muestra carpetas: «Todos los conjuntos» (siempre todos) y una por estación. Un conjunto está en las estaciones que tenga marcadas; sin ninguna marcada cuenta como «Todo el año». Al añadir una foto, la ficha pide primero «¿En qué carpetas va?» y no deja guardar sin elegir al menos una estación o «Todo el año». Si se añade desde una carpeta de estación, viene marcada.
+
+## Calendario y viajes (2-nov-2026)
+
+`meta.agenda = { plans: { "YYYY-MM-DD": idConjunto }, trips: [{ id, place: {name, sub, lat, lon}, from, to, occasions[], packed[], fc?, created, updated }] }`. Un conjunto previsto por día; los días de un viaje usan los mismos `plans`. `fc` es la previsión del destino (no va en la copia). La copia `.zip` (versión 2) incluye `agenda`; al restaurar se conservan los planes del móvil y se añaden los que falten.
+
+## Títulos y colores (decisión del usuario, 2-nov-2026)
+
+- El título de la pantalla Hoy es «¿Qué nos ponemos hoy?»: el «?» final va en color coral en lugar del punto (clase `h1.q`).
+- Ajustes > Personalizar: colores a elegir para botones principales (`--accent`), tarjeta del tiempo (`--navy`/`--navy-2`) y detalles (`--brand`). Solo muestras de `PALETTE` (legibles con texto blanco), sin selector libre. Se guardan en `localStorage` (`dressks-colors`) de ese móvil.
