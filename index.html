@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vestidor</title>
-<meta name="description" content="Tu vestidor personal: fotos de tus conjuntos y una sugerencia para cada día.">
+<title>DressKS</title>
+<meta name="description" content="DressKS, tu vestidor personal: fotos de tus conjuntos y una sugerencia para cada día.">
 <meta name="theme-color" content="#ffffff" id="meta-theme">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Vestidor">
+<meta name="apple-mobile-web-app-title" content="DressKS">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="img/icon-192.png" type="image/png">
@@ -145,6 +145,41 @@
   .banner .t { flex:1; }
   .banner .btn { background:transparent; color:inherit; border-color:currentColor; }
   .banner .x { background:none; border:0; color:inherit; padding:4px; cursor:pointer; }
+
+  .brand { display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--mut); margin-bottom:4px; }
+  .brand .ico { width:15px; height:15px; color:var(--brand); }
+
+  /* Carpetas */
+  .folders { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .folder { display:block; width:100%; text-align:left; padding:8px 8px 12px; border-radius:22px; border:1px solid var(--line); background:var(--surface); box-shadow:var(--shadow); cursor:pointer; transition:transform .2s var(--ease), border-color .2s var(--ease); }
+  .folder:hover { border-color:var(--ink); }
+  .folder:active { transform:scale(.98); }
+  .folder.all { grid-column:1 / -1; }
+  .folder .cov { position:relative; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:3px; aspect-ratio:1; border-radius:16px; overflow:hidden; background:var(--accent-soft); }
+  .folder.all .cov { grid-template-columns:repeat(4, 1fr); grid-template-rows:1fr; aspect-ratio:auto; height:150px; }
+  .folder .cov { grid-template-columns:repeat(2, minmax(0, 1fr)); grid-template-rows:repeat(2, minmax(0, 1fr)); }
+  .folder .cov.n1 { grid-template-columns:minmax(0, 1fr); grid-template-rows:minmax(0, 1fr); }
+  .folder .cov.n2 { grid-template-rows:minmax(0, 1fr); }
+  .folder:not(.all) .cov.n3 > img:first-child { grid-row:span 2; }
+  .folder.all .cov { grid-template-rows:minmax(0, 1fr); }
+  .folder .cov img { width:100%; height:100%; min-height:0; object-fit:cover; object-position:center 15%; display:block; }
+  .folder .cov .none { position:absolute; inset:0; display:grid; place-items:center; }
+  .folder .cov .none span { width:52px; height:52px; border-radius:16px; display:grid; place-items:center; }
+  .folder .cov .none .ico { width:26px; height:26px; }
+  .folder .ft { display:flex; align-items:center; gap:10px; margin-top:10px; padding:0 4px; }
+  .folder .ft .tl { width:32px; height:32px; border-radius:10px; display:grid; place-items:center; flex:none; }
+  .folder .ft .tl .ico { width:17px; height:17px; }
+  .folder .ft b { display:block; font-weight:600; letter-spacing:-.02em; line-height:1.2; }
+  .folder .ft small { color:var(--mut); }
+  .now { position:absolute; top:8px; left:8px; background:var(--brand); color:#fff; font-size:11px; font-weight:600; padding:2px 8px; border-radius:9999px; }
+  .place { background:var(--accent-soft); border-radius:18px; padding:14px; margin-bottom:20px; border:1px solid transparent; transition:border-color .2s var(--ease); }
+  .place.warn { border-color:var(--brand); }
+  .place b { display:block; font-size:16px; letter-spacing:-.02em; }
+  .place small { display:block; color:var(--mut); margin:2px 0 12px; }
+  .place .always { display:inline-flex; align-items:center; gap:4px; color:var(--ink); font-weight:600; }
+  .place .always .ico { width:14px; height:14px; }
+  .place .chip { background:var(--surface); }
+  .place .chip[aria-pressed="true"] { background:var(--ink); }
 
   /* Vestidor */
   .search { position:relative; margin-bottom:12px; }
@@ -283,7 +318,8 @@
 <body>
 <div class="app">
   <header class="top">
-    <div class="tt"><h1 id="title">Hoy</h1><div class="sub" id="subtitle"></div></div>
+    <button class="iconbtn" id="backBtn" data-act="folder-back" aria-label="Volver a las carpetas" data-ic="chevron-left" hidden></button>
+    <div class="tt"><div class="brand"><span data-ic="hanger"></span>DressKS</div><h1 id="title">Hoy</h1><div class="sub" id="subtitle"></div></div>
     <button class="iconbtn" data-act="theme" id="themeBtn" aria-label="Cambiar entre modo día y noche"></button>
   </header>
   <main>
@@ -317,15 +353,19 @@
         <label class="switch" id="ed-fav-row"><span class="tl t-red" data-ic="heart"></span><span>Favorito</span><input type="checkbox" id="ed-fav"></label>
       </div>
     </div>
+    <div class="place" id="ed-place">
+      <b>¿En qué carpetas va?</b>
+      <small>Siempre estará en <span class="always" data-ic="folder">Todos los conjuntos</span>. Elige además sus estaciones.</small>
+      <div class="chips" id="ed-seasons"></div>
+    </div>
     <label class="field"><span class="lb">Nombre <i>(opcional)</i></span><input class="txt" id="ed-name" maxlength="80" placeholder="Ej. Vaqueros y americana azul" autocomplete="off"></label>
+    <div class="field"><span class="lb">Ocasión <i>(sin marcar: cualquiera)</i></span><div class="chips" id="ed-occasions"></div></div>
+    <div class="field"><span class="lb">Tiempo <i>(sin marcar: cualquiera)</i></span><div class="chips" id="ed-weather"></div></div>
     <div class="field"><span class="lb">Prendas <i>(para buscarlas luego)</i></span>
       <div class="gin"><input class="txt" id="ed-g" list="dl-garments" placeholder="Ej. chaqueta azul" autocomplete="off" enterkeyhint="done"><button class="btn" data-act="ed-g-add" aria-label="Añadir prenda" data-ic="plus"></button></div>
       <datalist id="dl-garments"></datalist>
       <div class="glist" id="ed-glist"></div>
     </div>
-    <div class="field"><span class="lb">Temporada <i>(sin marcar: todas)</i></span><div class="chips" id="ed-seasons"></div></div>
-    <div class="field"><span class="lb">Ocasión <i>(sin marcar: cualquiera)</i></span><div class="chips" id="ed-occasions"></div></div>
-    <div class="field"><span class="lb">Tiempo <i>(sin marcar: cualquiera)</i></span><div class="chips" id="ed-weather"></div></div>
     <label class="field"><span class="lb">Notas</span><textarea class="txt" id="ed-notes" maxlength="500" placeholder="Ej. con los zapatos marrones"></textarea></label>
   </div>
   <div class="ft">
@@ -358,7 +398,7 @@
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script>
-const ICONS = {"armchair":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 11a2 2 0 0 1 2 2v2h10v-2a2 2 0 1 1 4 0v4a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2z\" /> <path d=\"M5 11v-5a3 3 0 0 1 3 -3h8a3 3 0 0 1 3 3v5\" /> <path d=\"M6 19v2\" /> <path d=\"M18 19v2\" /></svg>","arrows-shuffle":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 4l3 3l-3 3\" /> <path d=\"M18 20l3 -3l-3 -3\" /> <path d=\"M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5\" /> <path d=\"M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3\" /></svg>","beach":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17.553 16.75a7.5 7.5 0 0 0 -10.606 0\" /> <path d=\"M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z\" /> <path d=\"M16.732 10c1.658 -2.87 2.225 -5.644 1.268 -6.196c-.957 -.552 -3.075 1.326 -4.732 4.196\" /> <path d=\"M15 9l-3 5.196\" /> <path d=\"M3 19.25a2.4 2.4 0 0 1 1 -.25a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 1 .25\" /></svg>","briefcase":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z\" /> <path d=\"M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2\" /> <path d=\"M12 12l0 .01\" /> <path d=\"M3 13a20 20 0 0 0 18 0\" /></svg>","calendar":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z\" /> <path d=\"M16 3v4\" /> <path d=\"M8 3v4\" /> <path d=\"M4 11h16\" /> <path d=\"M11 15h1\" /> <path d=\"M12 15v3\" /></svg>","camera":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2\" /> <path d=\"M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /></svg>","chart-bar":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M4 20h14\" /></svg>","check":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l5 5l10 -10\" /></svg>","chevron-left":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 6l-6 6l6 6\" /></svg>","cloud":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878\" /></svg>","confetti":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5h2\" /> <path d=\"M5 4v2\" /> <path d=\"M11.5 4l-.5 2\" /> <path d=\"M18 5h2\" /> <path d=\"M19 4v2\" /> <path d=\"M15 9l-1 1\" /> <path d=\"M18 13l2 -.5\" /> <path d=\"M18 19h2\" /> <path d=\"M19 18v2\" /> <path d=\"M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z\" /></svg>","download":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2\" /> <path d=\"M7 11l5 5l5 -5\" /> <path d=\"M12 4l0 12\" /></svg>","eye-off":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10.585 10.587a2 2 0 0 0 2.829 2.828\" /> <path d=\"M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87\" /> <path d=\"M3 3l18 18\" /></svg>","hanger":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 6a2 2 0 1 0 -4 0c0 1.667 .67 3 2 4h-.008l7.971 4.428a2 2 0 0 1 1.029 1.749v.823a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-.823a2 2 0 0 1 1.029 -1.749l7.971 -4.428\" /></svg>","heart-filled":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z\" /></svg>","heart":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572\" /></svg>","history":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 8l0 4l2 2\" /> <path d=\"M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5\" /></svg>","home":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l-2 0l9 -9l9 9l-2 0\" /> <path d=\"M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7\" /> <path d=\"M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6\" /></svg>","layout-grid":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /></svg>","leaf":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 21c.5 -4.5 2.5 -8 7 -10\" /> <path d=\"M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z\" /></svg>","map-pin":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /> <path d=\"M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z\" /></svg>","moon":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z\" /></svg>","pencil":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4\" /> <path d=\"M13.5 6.5l4 4\" /></svg>","photo":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 8h.01\" /> <path d=\"M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z\" /> <path d=\"M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5\" /> <path d=\"M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3\" /></svg>","plant":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 15h10v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-4z\" /> <path d=\"M12 9a6 6 0 0 0 -6 -6h-3v2a6 6 0 0 0 6 6h3\" /> <path d=\"M12 11a6 6 0 0 1 6 -6h3v1a6 6 0 0 1 -6 6h-3\" /> <path d=\"M12 15l0 -6\" /></svg>","plus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 5l0 14\" /> <path d=\"M5 12l14 0\" /></svg>","refresh":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4\" /> <path d=\"M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4\" /></svg>","run":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M4 17l5 1l.75 -1.5\" /> <path d=\"M15 21l0 -4l-4 -3l1 -6\" /> <path d=\"M7 12l0 -3l5 -1l3 3l3 1\" /></svg>","search":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0\" /> <path d=\"M21 21l-6 -6\" /></svg>","settings":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z\" /> <path d=\"M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /></svg>","shirt":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0\" /></svg>","snowflake":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 4l2 1l2 -1\" /> <path d=\"M12 2v6.5l3 1.72\" /> <path d=\"M17.928 6.268l.134 2.232l1.866 1.232\" /> <path d=\"M20.66 7l-5.629 3.25l.01 3.458\" /> <path d=\"M19.928 14.268l-1.866 1.232l-.134 2.232\" /> <path d=\"M20.66 17l-5.629 -3.25l-2.99 1.738\" /> <path d=\"M14 20l-2 -1l-2 1\" /> <path d=\"M12 22v-6.5l-3 -1.72\" /> <path d=\"M6.072 17.732l-.134 -2.232l-1.866 -1.232\" /> <path d=\"M3.34 17l5.629 -3.25l-.01 -3.458\" /> <path d=\"M4.072 9.732l1.866 -1.232l.134 -2.232\" /> <path d=\"M3.34 7l5.629 3.25l2.99 -1.738\" /></svg>","sparkles":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z\" /></svg>","sun":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0\" /> <path d=\"M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7\" /></svg>","tag":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M3 6v5.172a2 2 0 0 0 .586 1.414l7.71 7.71a2.41 2.41 0 0 0 3.408 0l5.592 -5.592a2.41 2.41 0 0 0 0 -3.408l-7.71 -7.71a2 2 0 0 0 -1.414 -.586h-5.172a3 3 0 0 0 -3 3z\" /></svg>","temperature-minus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5\" /> <path d=\"M8 9l4 0\" /> <path d=\"M16 9l6 0\" /></svg>","temperature-plus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5\" /> <path d=\"M8 9l4 0\" /> <path d=\"M16 9l6 0\" /> <path d=\"M19 6l0 6\" /></svg>","trash":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 7l16 0\" /> <path d=\"M10 11l0 6\" /> <path d=\"M14 11l0 6\" /> <path d=\"M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12\" /> <path d=\"M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3\" /></svg>","umbrella":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 12a8 8 0 0 1 16 0z\" /> <path d=\"M12 12v6a2 2 0 0 0 4 0\" /></svg>","upload":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2\" /> <path d=\"M7 9l5 -5l5 5\" /> <path d=\"M12 4l0 12\" /></svg>","x":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6l-12 12\" /> <path d=\"M6 6l12 12\" /></svg>"};
+const ICONS = {"armchair":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 11a2 2 0 0 1 2 2v2h10v-2a2 2 0 1 1 4 0v4a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2z\" /> <path d=\"M5 11v-5a3 3 0 0 1 3 -3h8a3 3 0 0 1 3 3v5\" /> <path d=\"M6 19v2\" /> <path d=\"M18 19v2\" /></svg>","arrows-shuffle":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 4l3 3l-3 3\" /> <path d=\"M18 20l3 -3l-3 -3\" /> <path d=\"M3 7h3a5 5 0 0 1 5 5a5 5 0 0 0 5 5h5\" /> <path d=\"M21 7h-5a4.978 4.978 0 0 0 -3 1m-4 8a4.984 4.984 0 0 1 -3 1h-3\" /></svg>","beach":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M17.553 16.75a7.5 7.5 0 0 0 -10.606 0\" /> <path d=\"M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z\" /> <path d=\"M16.732 10c1.658 -2.87 2.225 -5.644 1.268 -6.196c-.957 -.552 -3.075 1.326 -4.732 4.196\" /> <path d=\"M15 9l-3 5.196\" /> <path d=\"M3 19.25a2.4 2.4 0 0 1 1 -.25a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 1 .25\" /></svg>","briefcase":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z\" /> <path d=\"M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2\" /> <path d=\"M12 12l0 .01\" /> <path d=\"M3 13a20 20 0 0 0 18 0\" /></svg>","calendar":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z\" /> <path d=\"M16 3v4\" /> <path d=\"M8 3v4\" /> <path d=\"M4 11h16\" /> <path d=\"M11 15h1\" /> <path d=\"M12 15v3\" /></svg>","camera":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h6a1 1 0 0 1 1 1a2 2 0 0 0 2 2h1a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2\" /> <path d=\"M9 13a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /></svg>","chart-bar":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 13a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M15 9a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M9 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M4 20h14\" /></svg>","check":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l5 5l10 -10\" /></svg>","chevron-left":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 6l-6 6l6 6\" /></svg>","cloud":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878\" /></svg>","confetti":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 5h2\" /> <path d=\"M5 4v2\" /> <path d=\"M11.5 4l-.5 2\" /> <path d=\"M18 5h2\" /> <path d=\"M19 4v2\" /> <path d=\"M15 9l-1 1\" /> <path d=\"M18 13l2 -.5\" /> <path d=\"M18 19h2\" /> <path d=\"M19 18v2\" /> <path d=\"M14 16.518l-6.518 -6.518l-4.39 9.58a1 1 0 0 0 1.329 1.329l9.579 -4.39z\" /></svg>","download":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2\" /> <path d=\"M7 11l5 5l5 -5\" /> <path d=\"M12 4l0 12\" /></svg>","eye-off":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10.585 10.587a2 2 0 0 0 2.829 2.828\" /> <path d=\"M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87\" /> <path d=\"M3 3l18 18\" /></svg>","folder":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2\" /></svg>","folders":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 3h3l2 2h5a2 2 0 0 1 2 2v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2\" /> <path d=\"M17 16v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2h2\" /></svg>","hanger":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M14 6a2 2 0 1 0 -4 0c0 1.667 .67 3 2 4h-.008l7.971 4.428a2 2 0 0 1 1.029 1.749v.823a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-.823a2 2 0 0 1 1.029 -1.749l7.971 -4.428\" /></svg>","heart-filled":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M6.979 3.074a6 6 0 0 1 4.988 1.425l.037 .033l.034 -.03a6 6 0 0 1 4.733 -1.44l.246 .036a6 6 0 0 1 3.364 10.008l-.18 .185l-.048 .041l-7.45 7.379a1 1 0 0 1 -1.313 .082l-.094 -.082l-7.493 -7.422a6 6 0 0 1 3.176 -10.215z\" /></svg>","heart":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572\" /></svg>","history":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 8l0 4l2 2\" /> <path d=\"M3.05 11a9 9 0 1 1 .5 4m-.5 5v-5h5\" /></svg>","home":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 12l-2 0l9 -9l9 9l-2 0\" /> <path d=\"M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7\" /> <path d=\"M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6\" /></svg>","layout-grid":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M14 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M4 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /> <path d=\"M14 14m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z\" /></svg>","leaf":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M5 21c.5 -4.5 2.5 -8 7 -10\" /> <path d=\"M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z\" /></svg>","map-pin":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /> <path d=\"M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z\" /></svg>","moon":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z\" /></svg>","pencil":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4\" /> <path d=\"M13.5 6.5l4 4\" /></svg>","photo":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 8h.01\" /> <path d=\"M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z\" /> <path d=\"M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5\" /> <path d=\"M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3\" /></svg>","plant":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 15h10v4a2 2 0 0 1 -2 2h-6a2 2 0 0 1 -2 -2v-4z\" /> <path d=\"M12 9a6 6 0 0 0 -6 -6h-3v2a6 6 0 0 0 6 6h3\" /> <path d=\"M12 11a6 6 0 0 1 6 -6h3v1a6 6 0 0 1 -6 6h-3\" /> <path d=\"M12 15l0 -6\" /></svg>","plus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 5l0 14\" /> <path d=\"M5 12l14 0\" /></svg>","refresh":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4\" /> <path d=\"M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4\" /></svg>","run":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M13 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M4 17l5 1l.75 -1.5\" /> <path d=\"M15 21l0 -4l-4 -3l1 -6\" /> <path d=\"M7 12l0 -3l5 -1l3 3l3 1\" /></svg>","search":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0\" /> <path d=\"M21 21l-6 -6\" /></svg>","settings":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z\" /> <path d=\"M9 12a3 3 0 1 0 6 0a3 3 0 0 0 -6 0\" /></svg>","shirt":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0\" /></svg>","snowflake":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M10 4l2 1l2 -1\" /> <path d=\"M12 2v6.5l3 1.72\" /> <path d=\"M17.928 6.268l.134 2.232l1.866 1.232\" /> <path d=\"M20.66 7l-5.629 3.25l.01 3.458\" /> <path d=\"M19.928 14.268l-1.866 1.232l-.134 2.232\" /> <path d=\"M20.66 17l-5.629 -3.25l-2.99 1.738\" /> <path d=\"M14 20l-2 -1l-2 1\" /> <path d=\"M12 22v-6.5l-3 -1.72\" /> <path d=\"M6.072 17.732l-.134 -2.232l-1.866 -1.232\" /> <path d=\"M3.34 17l5.629 -3.25l-.01 -3.458\" /> <path d=\"M4.072 9.732l1.866 -1.232l.134 -2.232\" /> <path d=\"M3.34 7l5.629 3.25l2.99 -1.738\" /></svg>","sparkles":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z\" /></svg>","sun":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0\" /> <path d=\"M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7\" /></svg>","tag":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0\" /> <path d=\"M3 6v5.172a2 2 0 0 0 .586 1.414l7.71 7.71a2.41 2.41 0 0 0 3.408 0l5.592 -5.592a2.41 2.41 0 0 0 0 -3.408l-7.71 -7.71a2 2 0 0 0 -1.414 -.586h-5.172a3 3 0 0 0 -3 3z\" /></svg>","temperature-minus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5\" /> <path d=\"M8 9l4 0\" /> <path d=\"M16 9l6 0\" /></svg>","temperature-plus":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M8 13.5a4 4 0 1 0 4 0v-8.5a2 2 0 0 0 -4 0v8.5\" /> <path d=\"M8 9l4 0\" /> <path d=\"M16 9l6 0\" /> <path d=\"M19 6l0 6\" /></svg>","trash":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 7l16 0\" /> <path d=\"M10 11l0 6\" /> <path d=\"M14 11l0 6\" /> <path d=\"M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12\" /> <path d=\"M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3\" /></svg>","umbrella":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 12a8 8 0 0 1 16 0z\" /> <path d=\"M12 12v6a2 2 0 0 0 4 0\" /></svg>","upload":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2\" /> <path d=\"M7 9l5 -5l5 5\" /> <path d=\"M12 4l0 12\" /></svg>","x":"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M18 6l-12 12\" /> <path d=\"M6 6l12 12\" /></svg>"};
 
 // ---------- Utilidades ----------
 const $ = (s, r = document) => r.querySelector(s);
@@ -424,7 +464,7 @@ let settings = {};
 let view = "hoy";
 const urls = new Map();
 const S = { occ: "", sugId: null, shown: new Set(), wxLoading: false, wxError: false, backup: null, installEvt: null };
-const F = { q: "", fav: false, tags: new Set(), sort: "olvidado" };
+const F = { folder: null, q: "", fav: false, tags: new Set(), sort: "olvidado" };
 const saveSettings = () => DB.setMeta("settings", settings);
 
 function photoUrls(o) {
@@ -534,13 +574,16 @@ function setView(v, animate = true) {
   view = v;
   document.querySelectorAll(".view").forEach(el => el.hidden = el.id !== "v-" + v);
   document.querySelectorAll(".tab").forEach(b => b.dataset.view === v ? b.setAttribute("aria-current", "page") : b.removeAttribute("aria-current"));
-  $("#title").textContent = TITLES[v];
+  const inF = v === "vestidor" && F.folder;
+  $("#title").textContent = inF ? folderName(F.folder) : TITLES[v];
+  $("#backBtn").hidden = !inF;
   if (animate) { document.body.classList.remove("anim"); void document.body.offsetWidth; document.body.classList.add("anim"); setTimeout(() => document.body.classList.remove("anim"), 700); }
   render();
   scrollTo(0, 0);
 }
 function render() {
-  $("#subtitle").textContent = view === "hoy" ? fmtLong.format(new Date()) : view === "vestidor" ? (outfits.length ? `${outfits.length} ${outfits.length === 1 ? "conjunto" : "conjuntos"}` : "") : "";
+  $("#subtitle").textContent = view === "hoy" ? fmtLong.format(new Date())
+    : view === "vestidor" ? (F.folder ? countText(outfits.filter(o => inFolder(o, F.folder)).length) : "Tus carpetas") : "";
   ({ hoy: renderHoy, vestidor: renderVestidor, historial: renderHistorial, ajustes: renderAjustes })[view]();
 }
 
@@ -633,6 +676,7 @@ function filtered() {
   const sel = {};
   F.tags.forEach(k => { const [c, v] = k.split(":"); (sel[c] ??= []).push(v); });
   let list = outfits.filter(o => {
+    if (F.folder && !inFolder(o, F.folder)) return false;
     if (F.fav && !o.fav) return false;
     for (const c in sel) if (!matches(o, c, sel[c])) return false;
     if (q && !(nameOf(o) + " " + (o.garments || []).join(" ") + " " + (o.notes || "")).toLowerCase().includes(q)) return false;
@@ -649,11 +693,39 @@ function tileHTML(o) {
   return `<button class="tile-o" data-act="open" data-id="${o.id}" aria-label="${esc(nameOf(o))}"><img src="${photoUrls(o).t}" alt="" loading="lazy">
     <span class="badge${n == null ? " new" : ""}">${sinceText(o)}</span>${o.fav ? `<span class="favb">${ic("heart-filled")}</span>` : ""}</button>`;
 }
+// Carpetas: "Todos los conjuntos" y una por estación. Un conjunto sin estación marcada vale para todo el año.
+const inFolder = (o, f) => f === "all" || matches(o, "seasons", [f]);
+const folderName = f => f === "all" ? "Todos los conjuntos" : tagInfo("seasons", f)[1];
+const countText = n => `${n} ${n === 1 ? "conjunto" : "conjuntos"}`;
+function folderHTML(f) {
+  const list = outfits.filter(o => inFolder(o, f)).sort((a, b) => b.created - a.created);
+  const n = 4, t = f === "all" ? ["slate", "folders"] : [tagInfo("seasons", f)[3], tagInfo("seasons", f)[2]];
+  const cells = list.slice(0, n).map(o => `<img src="${photoUrls(o).t}" alt="" loading="lazy">`);
+  const cover = list.length ? cells.join("") : `<div class="none"><span class="t-${t[0]}">${ic(t[1])}</span></div>`;
+  const now = f === seasonNow() ? `<span class="now">Ahora</span>` : "";
+  const k = Math.max(1, cells.length);
+  return `<button class="folder${f === "all" ? " all" : ""}" data-act="folder" data-f="${f}"><div class="cov n${k}"${f === "all" ? ` style="grid-template-columns:repeat(${k}, minmax(0, 1fr))"` : ""}>${cover}${now}</div>
+    <div class="ft"><span class="tl t-${t[0]}">${ic(t[1])}</span><div><b>${folderName(f)}</b><small>${countText(list.length)}</small></div></div></button>`;
+}
+function openFolder(f) {
+  F.folder = f; F.q = ""; F.fav = false; F.tags.clear();
+  history.pushState({ folder: f }, "");
+  setView("vestidor");
+}
+function closeFolder() { F.folder = null; setView("vestidor"); }
 function renderVestidor() {
   const el = $("#v-vestidor");
-  if (!outfits.length) { el.innerHTML = emptyHTML("Aún no hay conjuntos", "Pulsa el botón de la cámara para añadir el primero."); return; }
+  if (!F.folder) {
+    el.innerHTML = `<div class="folders">${["all", "primavera", "verano", "otono", "invierno"].map(folderHTML).join("")}</div>
+      ${outfits.length ? "" : `<p class="mut" style="text-align:center;margin-top:20px">Pulsa el botón de la cámara para añadir tu primer conjunto.</p>`}`;
+    return;
+  }
+  if (!outfits.some(o => inFolder(o, F.folder))) {
+    el.innerHTML = emptyHTML(F.folder === "all" ? "Aún no hay conjuntos" : `Nada en ${folderName(F.folder).toLowerCase()} todavía`, "Pulsa el botón de la cámara para añadir uno.");
+    return;
+  }
   const chips = [`<button type="button" class="chip" aria-pressed="${F.fav}" data-act="f-fav"><span class="tl t-red">${ic("heart")}</span>Favoritos</button>`];
-  for (const c of ["occasions", "seasons", "weather"]) for (const i of TAGS[c].items) chips.push(chipHTML(c, i, F.tags.has(`${c}:${i[0]}`), "f-tag"));
+  for (const c of ["occasions", "weather"]) for (const i of TAGS[c].items) chips.push(chipHTML(c, i, F.tags.has(`${c}:${i[0]}`), "f-tag"));
   el.innerHTML = `
     <div class="search">${ic("search")}<input class="txt" id="q" type="search" placeholder="Buscar por nombre o prenda" value="${esc(F.q)}" autocomplete="off" enterkeyhint="search"></div>
     <div class="chips scroll">${chips.join("")}</div>
@@ -668,7 +740,8 @@ function renderVestidor() {
 }
 function renderGrid() {
   const list = filtered(), any = F.q || F.fav || F.tags.size;
-  $("#nres").innerHTML = any ? `${list.length} de ${outfits.length} · <a href="#" data-act="f-clear" style="color:inherit">Quitar filtros</a>` : `${list.length} ${list.length === 1 ? "conjunto" : "conjuntos"}`;
+  const total = outfits.filter(o => inFolder(o, F.folder)).length;
+  $("#nres").innerHTML = any ? `${list.length} de ${total} · <a href="#" data-act="f-clear" style="color:inherit">Quitar filtros</a>` : `${list.length} ${list.length === 1 ? "conjunto" : "conjuntos"}`;
   $("#grid").innerHTML = list.length ? list.map(tileHTML).join("") : `<p class="mut" style="grid-column:1/-1;padding:24px 0;text-align:center">Ningún conjunto con estos filtros.</p>`;
 }
 
@@ -726,7 +799,7 @@ async function renderAjustes() {
       <p>Se consulta en Open-Meteo con tu ubicación aproximada (unos 1 km). No se envía nada más.</p>
       <div class="row-btns"><button class="btn sm" data-act="loc-gps">${ic("map-pin")}Mi ubicación</button><button class="btn sm" data-act="loc-city">${ic("search")}Ciudad</button>${loc ? `<button class="btn sm danger" data-act="loc-clear">Quitar</button>` : ""}</div></section>
     <section class="card set"><div class="hd"><span class="tl t-violet">${ic("settings")}</span><div><b>Almacenamiento</b><small id="st-sum">Calculando…</small></div></div><div id="st-body"></div></section>
-    <p class="mut" style="text-align:center;font-size:13px;margin-top:20px">Vestidor · versión 1.0 · tus datos no salen de este dispositivo</p>`;
+    <p class="mut" style="text-align:center;font-size:13px;margin-top:20px">DressKS · versión 1.1 · tus datos no salen de este dispositivo</p>`;
   try {
     const est = await navigator.storage?.estimate?.();
     const persisted = await navigator.storage?.persisted?.();
@@ -743,7 +816,9 @@ function openDetail(id) {
   const o = byId(id); if (!o) return;
   S.detailId = id;
   const t = todayISO(), wornToday = o.wears?.includes(t);
-  const tags = ["seasons", "occasions", "weather"].flatMap(c => (o[c] || []).map(v => tagHTML(c, v))).join("");
+  const allYear = !o.seasons?.length || o.seasons.length === TAGS.seasons.items.length;
+  const tags = (allYear ? `<span class="tag t-violet">${ic("calendar")}Todo el año</span>` : "")
+    + ["seasons", "occasions", "weather"].flatMap(c => c === "seasons" && allYear ? [] : (o[c] || []).map(v => tagHTML(c, v))).join("");
   const lw = lastWorn(o);
   $("#det-body").innerHTML = `<img class="det-ph" src="${photoUrls(o).p}" alt="${esc(nameOf(o))}"><div class="bd">
     <div class="name">${esc(nameOf(o))}</div>${tags ? `<div class="tags">${tags}</div>` : ""}
@@ -759,8 +834,10 @@ function openDetail(id) {
 // ---------- Editor ----------
 let ED = null;
 function openEditor(o, photo, thumb) {
-  ED = o ? { id: o.id, photo: o.photo, thumb: o.thumb, garments: [...(o.garments || [])], seasons: new Set(o.seasons), occasions: new Set(o.occasions), weather: new Set(o.weather) }
-         : { id: null, photo, thumb, garments: [], seasons: new Set(), occasions: new Set(), weather: new Set() };
+  const ALL = TAGS.seasons.items.map(i => i[0]);
+  ED = o ? { id: o.id, photo: o.photo, thumb: o.thumb, garments: [...(o.garments || [])], seasons: new Set(o.seasons?.length ? o.seasons : ALL), occasions: new Set(o.occasions), weather: new Set(o.weather) }
+         : { id: null, photo, thumb, garments: [], seasons: new Set(view === "vestidor" && F.folder && F.folder !== "all" ? [F.folder] : []), occasions: new Set(), weather: new Set() };
+  $("#ed-place").classList.remove("warn");
   $("#ed-title").textContent = o ? "Editar conjunto" : "Nuevo conjunto";
   $("#ed-name").value = o?.name || "";
   $("#ed-notes").value = o?.notes || "";
@@ -779,6 +856,8 @@ function openEditor(o, photo, thumb) {
 }
 function renderEdChips() {
   for (const c of ["seasons", "occasions", "weather"]) $("#ed-" + c).innerHTML = TAGS[c].items.map(i => chipHTML(c, i, ED[c].has(i[0]), "ed-tag")).join("");
+  const allYear = ED.seasons.size === TAGS.seasons.items.length;
+  $("#ed-seasons").insertAdjacentHTML("beforeend", `<button type="button" class="chip" aria-pressed="${allYear}" data-act="ed-allyear"><span class="tl t-violet">${ic("calendar")}</span>Todo el año</button>`);
 }
 function renderEdGarments() {
   $("#ed-glist").innerHTML = ED.garments.map((g, i) => `<span class="gchip">${esc(g)}<button type="button" data-act="ed-g-del" data-i="${i}" aria-label="Quitar ${esc(g)}">${ic("x")}</button></span>`).join("");
@@ -790,6 +869,11 @@ function addGarments() {
 }
 async function saveEditor() {
   addGarments();
+  if (!ED.seasons.size) {
+    $("#ed-place").classList.add("warn");
+    $("#ed-place").scrollIntoView({ behavior: "smooth", block: "center" });
+    return toast("Elige al menos una estación (o «Todo el año»)");
+  }
   const prev = ED.id ? byId(ED.id) : null;
   const o = {
     ...(prev || { id: uid(), created: Date.now(), wears: [] }),
@@ -914,7 +998,7 @@ async function makeBackup() {
     }
     const json = { app: "vestidor", version: 1, exported: new Date().toISOString(), outfits: meta };
     files.unshift({ name: "vestidor.json", data: new TextEncoder().encode(JSON.stringify(json, null, 1)) });
-    S.backup = { blob: makeZip(files), count: outfits.length, name: `vestidor-copia-${todayISO()}.zip` };
+    S.backup = { blob: makeZip(files), count: outfits.length, name: `dressks-copia-${todayISO()}.zip` };
   } catch (e) { toast("No se pudo preparar la copia."); }
   busy(false); render();
 }
@@ -923,7 +1007,7 @@ async function shareBackup() {
   const file = new File([blob], name, { type: "application/zip" });
   let done = false;
   if (navigator.canShare?.({ files: [file] })) {
-    try { await navigator.share({ files: [file], title: "Copia del vestidor" }); done = true; }
+    try { await navigator.share({ files: [file], title: "Copia de DressKS" }); done = true; }
     catch (e) { if (e.name === "AbortError") return; }
   }
   if (!done) {
@@ -958,7 +1042,7 @@ async function importBackup(file) {
     navigator.storage?.persist?.().catch(() => {});
     render();
   } catch {
-    busy(false); toast("Ese archivo no es una copia del Vestidor.");
+    busy(false); toast("Ese archivo no es una copia de DressKS.");
   }
 }
 
@@ -966,7 +1050,12 @@ async function importBackup(file) {
 function openD(d) { d.showModal(); history.pushState({ d: d.id }, ""); }
 function closeD(d) { if (!d.open) return; if (history.state?.d === d.id) history.back(); else d.close(); }
 function swapD(from, to) { from.close(); to.showModal(); history.replaceState({ d: to.id }, ""); }
-addEventListener("popstate", () => { const open = [...document.querySelectorAll("dialog.sheet[open]")].pop(); if (open) open.close(); });
+addEventListener("popstate", () => {
+  const open = [...document.querySelectorAll("dialog.sheet[open]")].pop();
+  if (open) open.close();
+  else if (F.folder && !history.state?.folder) closeFolder();
+});
+function leaveFolder() { if (history.state?.folder) history.back(); else closeFolder(); }
 document.querySelectorAll("dialog.sheet").forEach(d => {
   d.addEventListener("cancel", e => { e.preventDefault(); closeD(d); });
   d.addEventListener("click", e => { if (e.target === d) { const r = d.getBoundingClientRect(); if (e.clientY < r.top || e.clientY > r.bottom || e.clientX < r.left || e.clientX > r.right) closeD(d); } });
@@ -1000,7 +1089,17 @@ document.addEventListener("click", async e => {
   const b = e.target.closest("[data-act]"); if (!b) return;
   const { act, id, cat, v } = b.dataset;
   switch (act) {
-    case "view": setView(b.dataset.view); break;
+    case "view":
+      if (b.dataset.view === "vestidor" && view === "vestidor" && F.folder) leaveFolder();
+      else { if (b.dataset.view !== "vestidor") F.folder = null; setView(b.dataset.view); }
+      break;
+    case "folder": openFolder(b.dataset.f); break;
+    case "folder-back": leaveFolder(); break;
+    case "ed-allyear": {
+      const all = TAGS.seasons.items.map(i => i[0]);
+      ED.seasons = new Set(ED.seasons.size === all.length ? [] : all);
+      $("#ed-place").classList.remove("warn"); renderEdChips(); break;
+    }
     case "add": $("#filePhoto").value = ""; $("#filePhoto").click(); break;
     case "ed-photo": $("#filePhoto").value = ""; $("#filePhoto").click(); break;
     case "theme": {
@@ -1018,7 +1117,10 @@ document.addEventListener("click", async e => {
     case "f-fav": F.fav = !F.fav; b.setAttribute("aria-pressed", F.fav); renderGrid(); break;
     case "f-tag": { const k = `${cat}:${v}`; F.tags.has(k) ? F.tags.delete(k) : F.tags.add(k); b.setAttribute("aria-pressed", F.tags.has(k)); renderGrid(); break; }
     case "f-clear": e.preventDefault(); F.q = ""; F.fav = false; F.tags.clear(); renderVestidor(); break;
-    case "ed-tag": ED[cat].has(v) ? ED[cat].delete(v) : ED[cat].add(v); b.setAttribute("aria-pressed", ED[cat].has(v)); break;
+    case "ed-tag":
+      ED[cat].has(v) ? ED[cat].delete(v) : ED[cat].add(v); b.setAttribute("aria-pressed", ED[cat].has(v));
+      if (cat === "seasons") { $("#ed-place").classList.remove("warn"); renderEdChips(); }
+      break;
     case "ed-g-add": addGarments(); $("#ed-g").focus(); break;
     case "ed-g-del": ED.garments.splice(+b.dataset.i, 1); renderEdGarments(); break;
     case "ed-save": await saveEditor(); break;

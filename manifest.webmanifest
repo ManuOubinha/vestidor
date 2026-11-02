@@ -1,7 +1,7 @@
 {
-  "name": "Vestidor",
-  "short_name": "Vestidor",
-  "description": "Tu vestidor personal: fotos de tus conjuntos y una sugerencia para cada día.",
+  "name": "DressKS",
+  "short_name": "DressKS",
+  "description": "DressKS, tu vestidor personal: fotos de tus conjuntos y una sugerencia para cada día.",
   "lang": "es",
   "start_url": "./",
   "scope": "./",
